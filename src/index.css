@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Baloo 2", system-ui, sans-serif;
+}
+
+/* ── Cloud / sky drift: back-and-forth ── */
+@keyframes cloud-drift {
+  0%   { transform: translateX(-5%); }
+  100% { transform: translateX(5%); }
+}
+
+/* ── Sky drift (slow, zen) ── */
+@keyframes sky-drift {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-2%); }
+  100% { transform: translateX(0); }
+}
+
+/* ── God rays opacity pulse ── */
+@keyframes ray-pulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.6; }
+}
+
+/* ── God rays slow rotation from light source ── */
+@keyframes ray-drift {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(3deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ── God rays scale breathing ── */
+@keyframes ray-breathe {
+  0%, 100% { scale: 1; }
+  50%      { scale: 1.08; }
+}
+
+/* ── Sluglord blink (fast flash) ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ── Sluglord idle: breathing + sway — SLOWED from 5s → 8s ── */
+@keyframes sluglord-idle {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  25%      { transform: translateY(-4px) rotate(0.8deg) scale(1.01); }
+  50%      { transform: translateY(-2px) rotate(0deg) scale(1.015); }
+  75%      { transform: translateY(-4px) rotate(-0.8deg) scale(1.01); }
+}
+
+/* ── Foreground grass sway — durations increased in components ── */
+@keyframes grass-sway {
+  0%, 100% { transform: skewX(-1.5deg); }
+  50%      { transform: skewX(1.5deg); }
+}
+
+/* ── Sign gentle bounce ── */
+@keyframes sign-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-3px) rotate(0.5deg); }
+}
+
+/* ── Floating pollen particle — slower drift ── */
+@keyframes pollen-float {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+  10%  { opacity: 0.7; }
+  50%  { transform: translate(30px, -60px) scale(0.8); opacity: 0.5; }
+  90%  { opacity: 0.3; }
+  100% { transform: translate(60px, -120px) scale(0.6); opacity: 0; }
+}
+
+/* ── Loading screen fade — warm amber background ── */
+@keyframes loader-fade {
+  0%   { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
+
+@keyframes loader-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%      { transform: scale(1.1); opacity: 1; }
+}
+
+/* ── Toast fade ── */
+@keyframes toast-in {
+  0%   { opacity: 0; transform: translateY(6px); }
+  15%  { opacity: 1; transform: translateY(0); }
+  85%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-4px); }
+}
+
+/* ── NEW: Sun pulse — gentle scale/opacity for sun orb ── */
+@keyframes sun-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50%      { transform: scale(1.06); opacity: 0.9; }
+}
+
+/* ── NEW: Glow breathe — for enlightened halo behind character ── */
+@keyframes glow-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50%      { transform: scale(1.08); opacity: 0.75; }
+}
+
+/* ── NEW: Quote fade — for loading screen quote text ── */
+@keyframes quote-fade {
+  0%       { opacity: 0; transform: translateY(8px); }
+  100%     { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Modal fade-in ── */
+@keyframes modal-fade {
+  0%   { opacity: 0; transform: scale(0.97); }
+  100% { opacity: 1; transform: scale(1); }
+}
