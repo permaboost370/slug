@@ -181,7 +181,7 @@ function MainHill() {
     : config.assets.hillMain;
 
   return (
-    <div className="absolute left-0 right-0 bottom-0 z-[4] pointer-events-none">
+    <div className="absolute left-0 right-0 bottom-0 z-[4] pointer-events-none max-sm:scale-[1.2] max-sm:origin-bottom">
       {hillSrc ? (
         <img src={hillSrc} alt="" className="w-full block" draggable={false} />
       ) : (
@@ -809,10 +809,8 @@ function SocialLinks() {
     <div className="absolute z-[12]
                     bottom-[12%] left-4
                     sm:bottom-[6%] sm:left-6
-                    max-sm:bottom-[3%] max-sm:left-1/2 max-sm:-translate-x-1/2
-                    max-sm:bg-black/45 max-sm:backdrop-blur-md max-sm:rounded-full max-sm:px-5 max-sm:py-2.5
-                    max-sm:border max-sm:border-white/15
-                    flex sm:flex-col gap-2.5 sm:gap-3">
+                    max-sm:top-[155px] max-sm:right-4 max-sm:bottom-auto max-sm:left-auto
+                    flex flex-col items-center gap-1.5 sm:gap-3">
       {links.map((l) => (
         <a
           key={l.key}
@@ -822,7 +820,7 @@ function SocialLinks() {
           className="group"
           title={l.label}
         >
-          <div className="w-14 h-14 sm:w-16 sm:h-16 group-hover:scale-110 transition-transform flex items-center justify-center">
+          <div className="w-16 h-16 sm:w-16 sm:h-16 group-hover:scale-110 transition-transform flex items-center justify-center">
             {config.assets[l.assetKey] ? (
               <img src={config.assets[l.assetKey]} alt={l.label} className="w-full h-full object-contain drop-shadow-md" draggable={false} />
             ) : (
