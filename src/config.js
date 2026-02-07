@@ -21,35 +21,35 @@ const config = {
 
   assets: {
     // Title logo
-    titleLogo: "/assets/Sluglord Assets – Refined Versions_Sluglord Text2.png",
+    titleLogo: "/assets/Sluglord Assets – Refined Versions_Sluglord Text2.webp",
 
-    // Scene layers — full-width PNGs
-    sky: "/assets/sky-clouds.png",
-    hillsBackground: "/assets/hills-background.png",
-    hillMain: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (Open Eyes, Holding Sunflower).png",  // Fallback
-    hillMainOpen: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (Open Eyes, Holding Sunflower).png",   // Eyes open
-    hillMainBlink: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (close Eyes, Holding Sunflower).png",  // Eyes closed
+    // Scene layers — optimized WebP
+    sky: "/assets/sky-clouds.webp",
+    hillsBackground: "/assets/hills-background.webp",
+    hillMain: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (Open Eyes, Holding Sunflower).webp",  // Fallback
+    hillMainOpen: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (Open Eyes, Holding Sunflower).webp",   // Eyes open
+    hillMainBlink: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (close Eyes, Holding Sunflower).webp",  // Eyes closed
     grassForeground: null,  // Removed to show paved road
-    godRays: "/assets/Sluglord  website Assets_god-rays copy.png",
+    godRays: "/assets/Sluglord  website Assets_god-rays copy.webp",
 
     // Sunrise additions
-    sunGlow: "/assets/Sun, Sky_Sun.png",
-    sluglordShadow: null,            // "/assets/sluglord-shadow.png"
-    pollen: null,                     // "/assets/pollen.png" (sprite)
+    sunGlow: "/assets/Sun, Sky_Sun.webp",
+    sluglordShadow: null,            // "/assets/sluglord-shadow.webp"
+    pollen: null,                     // "/assets/pollen.webp" (sprite)
 
-    // Characters — PNGs with transparency
-    sluglordOpen: "/assets/sluglord-open.png",
-    sluglordBlink: "/assets/sluglord-blink.png",
-    sunflower: "/assets/sunflower.png",
+    // Characters — WebP with transparency
+    sluglordOpen: "/assets/sluglord-open.webp",
+    sluglordBlink: "/assets/sluglord-blink.webp",
+    sunflower: "/assets/sunflower.webp",
 
     // UI assets
-    woodenSign: "/assets/sign-wood.png",
-    iconX: "/assets/icon-x.png",
-    iconTelegram: "/assets/icon-telegram.png",
-    iconDex: "/assets/icon-dex.png",
+    woodenSign: "/assets/sign-wood.webp",
+    iconX: "/assets/icon-x.webp",
+    iconTelegram: "/assets/icon-telegram.webp",
+    iconDex: "/assets/icon-dex.webp",
 
     // Meta assets (not rendered in scene)
-    ogCard: null,                     // "/assets/og-card.png"
+    ogCard: null,                     // "/assets/og-card.webp"
     favicon: null,                    // "/assets/favicon.png"
   },
 

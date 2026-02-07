@@ -14,6 +14,25 @@ function Asset({ src, label, dims, format = "PNG transparent", color, className 
   return <Placeholder label={label} dims={dims} format={format} color={color} className={className} style={style} />;
 }
 
+/** Detect screen size for responsive rendering */
+function useScreenSize() {
+  const [size, setSize] = useState(() => {
+    const w = window.innerWidth;
+    return w < 640 ? "mobile" : w < 1024 ? "tablet" : "desktop";
+  });
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      setSize(w < 640 ? "mobile" : w < 1024 ? "tablet" : "desktop");
+    };
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return size;
+}
+
 /** Seeded random for consistent placement across renders */
 function seededRandom(seed) {
   let s = seed;
@@ -312,6 +331,10 @@ function generateSunflowerField() {
 const sunflowerField = generateSunflowerField();
 
 function SunflowerLayer({ flowers, keyPrefix, placeholderLabel }) {
+  const size = useScreenSize();
+  const step = size === "mobile" ? 4 : size === "tablet" ? 2 : 1;
+  const filtered = step === 1 ? flowers : flowers.filter((_, i) => i % step === 0);
+
   if (!config.assets.sunflower) {
     return (
       <div className="absolute z-[4] bottom-[30%] left-[10%] right-[10%] h-[12vh]">
@@ -322,7 +345,7 @@ function SunflowerLayer({ flowers, keyPrefix, placeholderLabel }) {
 
   return (
     <>
-      {flowers.map((s, i) => (
+      {filtered.map((s, i) => (
         <div
           key={`${keyPrefix}-${i}`}
           className="absolute aspect-[2/5]"
@@ -488,11 +511,15 @@ const foregroundFlowers = [
 ];
 
 function ForegroundSunflowers() {
+  const size = useScreenSize();
   if (!config.assets.sunflower) return null;
+
+  const step = size === "mobile" ? 3 : size === "tablet" ? 2 : 1;
+  const filtered = step === 1 ? foregroundFlowers : foregroundFlowers.filter((_, i) => i % step === 0);
 
   return (
     <>
-      {foregroundFlowers.map((s, i) => (
+      {filtered.map((s, i) => (
         <div
           key={`fg-sunflower-${i}`}
           className="absolute aspect-[2/5]"
@@ -509,6 +536,7 @@ function ForegroundSunflowers() {
           <img
             src={config.assets.sunflower}
             alt=""
+            loading="lazy"
             className="w-full h-full object-contain"
             style={{ filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))" }}
             draggable={false}
@@ -569,6 +597,7 @@ function GodRays() {
         <img
           src={config.assets.godRays}
           alt=""
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
           style={{
             animation: "ray-drift 30s ease-in-out infinite, ray-pulse 12s ease-in-out infinite, ray-breathe 18s ease-in-out infinite",
@@ -582,6 +611,7 @@ function GodRays() {
         <img
           src={config.assets.godRays}
           alt=""
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
           style={{
             animation: "ray-drift 35s ease-in-out infinite reverse, ray-pulse 9s ease-in-out infinite, ray-breathe 22s ease-in-out infinite",
@@ -886,7 +916,7 @@ function ModalOverlay({ onClose, children }) {
         {/* Close button — wooden style */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full text-sm font-bold leading-none cursor-pointer transition-all"
+          className="absolute top-3 right-3 z-10 w-11 h-11 flex items-center justify-center rounded-full text-sm font-bold leading-none cursor-pointer transition-all"
           style={{
             color: "#F5E6C8",
             backgroundColor: "#8B7355",
@@ -904,7 +934,7 @@ function ModalOverlay({ onClose, children }) {
         </button>
 
         {/* Scrollable content */}
-        <div className="relative overflow-y-auto max-h-[90vh] px-8 py-8 sm:px-14 sm:py-10">
+        <div className="relative overflow-y-auto max-h-[85vh] sm:max-h-[90vh] px-5 py-6 sm:px-14 sm:py-10">
           <div className="flex flex-col items-center text-center w-full">
             {children}
           </div>
