@@ -181,7 +181,7 @@ function MainHill() {
     : config.assets.hillMain;
 
   return (
-    <div className="absolute left-0 right-0 bottom-0 z-[4] pointer-events-none max-sm:scale-[1.2] max-sm:origin-bottom">
+    <div className="absolute left-0 right-0 bottom-0 z-[4] pointer-events-none max-sm:scale-[1.45] max-sm:origin-bottom">
       {hillSrc ? (
         <img src={hillSrc} alt="" className="w-full block" draggable={false} />
       ) : (
@@ -670,12 +670,12 @@ function ForegroundGrass() {
    ═══════════════════════════════════════════════════════════════════ */
 function TokenTitle() {
   return (
-    <div className="absolute z-[10] top-4 sm:top-6 left-1/2 -translate-x-1/2 text-center select-none">
+    <div className="absolute z-[10] top-2 sm:top-6 left-1/2 -translate-x-1/2 text-center select-none">
       {config.assets.titleLogo ? (
         <img
           src={config.assets.titleLogo}
           alt={config.tokenName}
-          className="w-[34vw] sm:w-[45vw] md:w-[35vw] max-w-md"
+          className="w-[50vw] sm:w-[45vw] md:w-[35vw] max-w-md"
           draggable={false}
         />
       ) : (
@@ -743,7 +743,7 @@ function SignStack({ onOpenModal }) {
       : config.contractAddress;
 
   return (
-    <div className="absolute z-[12] top-4 right-4 sm:top-6 sm:right-6 flex flex-col items-center gap-1">
+    <div className="absolute z-[12] top-[52px] right-4 sm:top-6 sm:right-6 flex flex-col items-center gap-1">
       <SignButton label={"\uD835\uDCDB\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE"} onClick={() => onOpenModal("lore")} />
       <SignButton label={"\uD835\uDCDC\uD835\uDCEE\uD835\uDCF6\uD835\uDCEE\uD835\uDCFC"} onClick={() => onOpenModal("memes")} />
 
@@ -809,7 +809,7 @@ function SocialLinks() {
     <div className="absolute z-[12]
                     bottom-[12%] left-4
                     sm:bottom-[6%] sm:left-6
-                    max-sm:top-4 max-sm:left-3 max-sm:bottom-auto
+                    max-sm:top-[52px] max-sm:left-3 max-sm:bottom-auto
                     flex flex-col items-center gap-1 sm:gap-3">
       {links.map((l) => (
         <a
