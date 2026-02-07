@@ -1149,10 +1149,10 @@ function ProofGallery({ onClose }) {
       {videos.map((v, i) => (
         <div
           key={`video-${i}`}
-          className="w-full max-w-md mb-6 rounded-xl overflow-hidden"
+          className="mb-6 rounded-xl overflow-hidden inline-block max-h-[50vh]"
           style={{ border: "2px solid rgba(139,115,85,0.2)", boxShadow: "0 2px 8px rgba(80,50,30,0.15)" }}
         >
-          <video src={v.url} className="w-full" controls playsInline />
+          <video src={v.url} className="max-h-[50vh] rounded-xl" controls playsInline />
         </div>
       ))}
 
