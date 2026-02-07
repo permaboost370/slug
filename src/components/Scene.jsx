@@ -670,12 +670,12 @@ function ForegroundGrass() {
    ═══════════════════════════════════════════════════════════════════ */
 function TokenTitle() {
   return (
-    <div className="absolute z-[10] top-4 sm:top-6 left-3 sm:left-1/2 sm:-translate-x-1/2 text-center select-none">
+    <div className="absolute z-[10] top-4 sm:top-6 left-1/2 -translate-x-1/2 text-center select-none">
       {config.assets.titleLogo ? (
         <img
           src={config.assets.titleLogo}
           alt={config.tokenName}
-          className="w-[42vw] sm:w-[45vw] md:w-[35vw] max-w-md"
+          className="w-[34vw] sm:w-[45vw] md:w-[35vw] max-w-md"
           draggable={false}
         />
       ) : (
@@ -809,8 +809,8 @@ function SocialLinks() {
     <div className="absolute z-[12]
                     bottom-[12%] left-4
                     sm:bottom-[6%] sm:left-6
-                    max-sm:top-[155px] max-sm:right-4 max-sm:bottom-auto max-sm:left-auto
-                    flex flex-col items-center gap-1.5 sm:gap-3">
+                    max-sm:top-4 max-sm:left-3 max-sm:bottom-auto
+                    flex flex-col items-center gap-1 sm:gap-3">
       {links.map((l) => (
         <a
           key={l.key}
@@ -820,7 +820,7 @@ function SocialLinks() {
           className="group"
           title={l.label}
         >
-          <div className="w-16 h-16 sm:w-16 sm:h-16 group-hover:scale-110 transition-transform flex items-center justify-center">
+          <div className="w-11 h-11 sm:w-16 sm:h-16 group-hover:scale-110 transition-transform flex items-center justify-center">
             {config.assets[l.assetKey] ? (
               <img src={config.assets[l.assetKey]} alt={l.label} className="w-full h-full object-contain drop-shadow-md" draggable={false} />
             ) : (
