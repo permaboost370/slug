@@ -670,12 +670,12 @@ function ForegroundGrass() {
    ═══════════════════════════════════════════════════════════════════ */
 function TokenTitle() {
   return (
-    <div className="absolute z-[10] top-4 sm:top-6 left-1/2 -translate-x-1/2 text-center select-none">
+    <div className="absolute z-[10] top-4 sm:top-6 left-3 sm:left-1/2 sm:-translate-x-1/2 text-center select-none">
       {config.assets.titleLogo ? (
         <img
           src={config.assets.titleLogo}
           alt={config.tokenName}
-          className="w-[60vw] sm:w-[45vw] md:w-[35vw] max-w-md"
+          className="w-[42vw] sm:w-[45vw] md:w-[35vw] max-w-md"
           draggable={false}
         />
       ) : (
@@ -704,9 +704,9 @@ function SignButton({ label, onClick, className = "" }) {
         className={`relative cursor-pointer hover:scale-105 transition-transform ${className}`}
         onClick={onClick}
       >
-        <img src={config.assets.woodenSign} alt="" className="w-36 sm:w-44" draggable={false} />
+        <img src={config.assets.woodenSign} alt="" className="w-24 sm:w-36 md:w-44" draggable={false} />
         <span
-          className="absolute inset-0 flex items-center justify-center text-base sm:text-lg font-bold"
+          className="absolute inset-0 flex items-center justify-center text-sm sm:text-base md:text-lg font-bold"
           style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5", textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000" }}
         >
           {label}
@@ -767,9 +767,9 @@ function SignStack({ onOpenModal }) {
             onClick={copy}
             title="Click to copy contract address"
           >
-            <img src={config.assets.woodenSign} alt="Sign" className="w-36 sm:w-44" draggable={false} />
+            <img src={config.assets.woodenSign} alt="Sign" className="w-24 sm:w-36 md:w-44" draggable={false} />
             <span
-              className="absolute inset-0 flex items-center justify-center text-base sm:text-lg font-bold px-2"
+              className="absolute inset-0 flex items-center justify-center text-sm sm:text-base md:text-lg font-bold px-2"
               style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5", textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000" }}
             >
               {"\uD835\uDCD2\uD835\uDCD0"}
@@ -806,10 +806,12 @@ function SocialLinks() {
   ];
 
   return (
-    <div className="absolute z-[10]
+    <div className="absolute z-[12]
                     bottom-[12%] left-4
                     sm:bottom-[6%] sm:left-6
-                    max-sm:bottom-[2%] max-sm:left-1/2 max-sm:-translate-x-1/2
+                    max-sm:bottom-[3%] max-sm:left-1/2 max-sm:-translate-x-1/2
+                    max-sm:bg-black/45 max-sm:backdrop-blur-md max-sm:rounded-full max-sm:px-5 max-sm:py-2.5
+                    max-sm:border max-sm:border-white/15
                     flex sm:flex-col gap-2.5 sm:gap-3">
       {links.map((l) => (
         <a
@@ -998,30 +1000,25 @@ function LoreModal({ onClose }) {
         style={{ fontFamily: "'Baloo 2', sans-serif", color: "#4A3728" }}
       >
         <p>
-          Long before the world knew of Pepe, before the rarest of frogs graced
-          the screens of millions, there was a quiet moment on a sun-drenched
-          hilltop. Matt Furie, sketchbook in hand, sat among the wild sunflowers
-          and let his mind wander.
+          <strong style={{ color: "#7B5B3A" }}>Sluglord</strong> is a mix of Pepe the Frog,
+          Jabba the Hutt and an enlightened being.
         </p>
         <p>
-          A slug crawled slowly across his shoe. It left a glistening trail in
-          the morning dew — unhurried, unbothered, perfectly content. Matt
-          watched it for what felt like an hour. The slug didn't care about
-          deadlines, clout, or the chaos of the world below the hill. It simply
-          <em> was</em>.
+          I was walking home up the hill I always walk some sunny morning after
+          dropping my daughter off at school. I said goodbye to a friend, turned
+          to walk away and saw a happy Buddha garden figurine with a happy smile,
+          arms wide open to the sky, soaking up the sun. The moment influenced
+          my idea.
         </p>
         <p>
-          In that golden light, surrounded by the hum of bees and the rustle of
-          petals, an idea crystallised: what if a character could embody that
-          same serene, unshakeable calm? A creature so laid-back it borders on
-          enlightenment. Not a frog — something even slower, even more
-          grounded.
+          I like showing the 'good' side of 'bad' guys. The flower represents
+          cosmic wonder and the beauty of life, the clouds, the rain, the soil,
+          the interconnectedness of everything. There is a good reason flowers
+          are popular in art.
         </p>
         <p>
-          Matt opened his sketchbook and drew the first lines of
-          <strong style={{ color: "#7B5B3A" }}> Sluglord</strong> — a slug with
-          half-lidded eyes, a knowing smile, and a crown of sunflower pollen.
-          The legend was born not from hype, but from stillness.
+          The flower compliments the smile of the Sluglord and his outstretched
+          arms bask in the sun like the petals of a flower.
         </p>
       </div>
 
