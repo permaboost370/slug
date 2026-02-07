@@ -21,17 +21,19 @@ const config = {
 
   assets: {
     // Title logo
-    titleLogo: "/assets/Sluglord Font-03.png",
+    titleLogo: "/assets/Sluglord Assets – Refined Versions_Sluglord Text2.png",
 
     // Scene layers — full-width PNGs
     sky: "/assets/sky-clouds.png",
     hillsBackground: "/assets/hills-background.png",
-    hillMain: "/assets/hill-main.png",
-    grassForeground: "/assets/grass-foreground.png",
+    hillMain: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (Open Eyes, Holding Sunflower).png",  // Fallback
+    hillMainOpen: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (Open Eyes, Holding Sunflower).png",   // Eyes open
+    hillMainBlink: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (close Eyes, Holding Sunflower).png",  // Eyes closed
+    grassForeground: null,  // Removed to show paved road
     godRays: "/assets/Sluglord  website Assets_god-rays copy.png",
 
     // Sunrise additions
-    sunGlow: null,                    // "/assets/sun-glow.png"
+    sunGlow: "/assets/Sun, Sky_Sun.png",
     sluglordShadow: null,            // "/assets/sluglord-shadow.png"
     pollen: null,                     // "/assets/pollen.png" (sprite)
 

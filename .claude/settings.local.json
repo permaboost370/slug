@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in \"/assets/sky-clouds.png\" \"/assets/hills-background.png\" \"/assets/hill-main.png\" \"/assets/grass-foreground.png\" \"/assets/god-rays.png\" \"/assets/sluglord-open.png\" \"/assets/sluglord-blink.png\" \"/assets/sunflower.png\" \"/assets/sign-wood.png\" \"/assets/icon-x.png\" \"/assets/icon-telegram.png\" \"/assets/icon-dex.png\" \"/assets/ambient-nature.mp3\" \"/vite.svg\")",
+      "Bash(do if [ -f \"public$file\" ])",
+      "Bash(then echo \"EXISTS: public$file\")",
+      "Bash(else echo \"MISSING: public$file\")",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(test:*)",
+      "Bash(ren \"C:\\\\Users\\\\mixal\\\\Slug\\\\public\\\\assets\\\\Sluglord Assets-05.png\" sunflower.png)",
+      "Bash(move \"C:\\\\Users\\\\mixal\\\\Slug\\\\public\\\\assets\\\\Sluglord Assets-05.png\" \"C:\\\\Users\\\\mixal\\\\Slug\\\\public\\\\assets\\\\sunflower.png\")",
+      "Bash(npx playwright --version)",
+      "Bash(curl:*)",
+      "Bash(npx playwright:*)",
+      "Bash(python3:*)",
+      "Bash(python:*)",
+      "Bash(ls -la \"C:\\\\Users\\\\mixal\\\\Slug\\\\public\\\\assets\"\" | grep -v \"^d\" | grep -v \"Telegram \")",
+      "Bash(ls -1 \"C:\\\\Users\\\\mixal\\\\Slug\\\\public\\\\assets\"\" | grep -v \"Telegram\" | grep -v \".zip \")",
+      "Bash(npm run build:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(copy:*)",
+      "Bash(npm install:*)",
+      "Bash(timeout:*)",
+      "Bash(powershell -Command \"Start-Sleep -Seconds 3; try { Invoke-WebRequest -Uri ''http://localhost:5173'' -UseBasicParsing -TimeoutSec 5 | Out-Null; Write-Output ''Server ready'' } catch { Write-Output ''Not ready'' }\")",
+      "Bash(node screenshot.mjs:*)",
+      "Bash(powershell:*)"
+    ]
+  }
+}

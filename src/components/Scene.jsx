@@ -97,13 +97,6 @@ function SunGlow() {
           }}
         />
       )}
-      <Placeholder
-        label="SUN GLOW"
-        dims="semi-transparent radial"
-        color="transparent"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-0 w-32 h-8"
-        style={{ backgroundColor: "transparent" }}
-      />
     </div>
   );
 }
@@ -138,13 +131,40 @@ function DistantHills() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   LAYER 4 — MAIN HILLSIDE
+   LAYER 4 — MAIN HILLSIDE (with integrated character + blink effect)
    ═══════════════════════════════════════════════════════════════════ */
 function MainHill() {
+  const [blinking, setBlinking] = useState(false);
+
+  // Blink effect - only when we have both open/blink assets
+  useEffect(() => {
+    if (!config.assets.hillMainOpen || !config.assets.hillMainBlink) return;
+
+    console.log("Blink effect initialized - open:", config.assets.hillMainOpen, "blink:", config.assets.hillMainBlink);
+
+    const scheduleBlink = () => {
+      const delay = 2000 + Math.random() * 2000; // Blink every 2-4 seconds
+      return setTimeout(() => {
+        console.log("Blinking!");
+        setBlinking(true);
+        setTimeout(() => setBlinking(false), 400); // Blink lasts 400ms
+        timerId = scheduleBlink();
+      }, delay);
+    };
+    let timerId = scheduleBlink();
+    return () => clearTimeout(timerId);
+  }, []);
+
+  // Use new assets with blink effect if available, otherwise fallback
+  const hasBlinkAssets = config.assets.hillMainOpen && config.assets.hillMainBlink;
+  const hillSrc = hasBlinkAssets
+    ? (blinking ? config.assets.hillMainBlink : config.assets.hillMainOpen)
+    : config.assets.hillMain;
+
   return (
     <div className="absolute left-0 right-0 bottom-0 z-[4] pointer-events-none">
-      {config.assets.hillMain ? (
-        <img src={config.assets.hillMain} alt="" className="w-full block" draggable={false} />
+      {hillSrc ? (
+        <img src={hillSrc} alt="" className="w-full block" draggable={false} />
       ) : (
         <div className="h-[55vh] relative overflow-hidden">
           <div
@@ -168,19 +188,22 @@ function MainHill() {
    Center gap for character path. Flowers face inward toward sun.
    ═══════════════════════════════════════════════════════════════════ */
 
-// Place a flower on the left or right side, avoiding the center corridor
-function sidePosition(rng, bandBottomMin, bandBottomMax, gapNarrowness) {
+// Place a flower on the left or right side, creating dense walls along the road
+function sidePosition(rng, bandBottomMin, bandBottomMax, gapNarrowness, forceSide = null) {
   const r = (min, max) => min + rng() * (max - min);
-  // Gap gets narrower further back (perspective). gapNarrowness: 0=wide, 1=narrow
-  const gapHalf = 16 - gapNarrowness * 10; // 16% wide at front, ~6% at far back
-  const side = rng() < 0.5 ? "left" : "right";
+  // Keep flowers OFF the road - wider gap especially on left
+  const gapHalf = 16 - gapNarrowness * 8; // 16% at front, ~8% at far back
+  const side = forceSide || (rng() < 0.5 ? "left" : "right");
   let left;
   if (side === "left") {
-    left = r(-4, 50 - gapHalf);
+    // Left side - stay well clear of road
+    left = r(-8, 50 - gapHalf - 3);
   } else {
-    left = r(50 + gapHalf, 104);
+    // Right side - stay clear of road
+    left = r(50 + gapHalf + 3, 108);
   }
-  const tilt = side === "left" ? (8 + r(0, 8)) : (-8 + r(-8, 0)); // lean inward toward center/sun
+  // Slight tilt variation for natural look
+  const tilt = side === "left" ? r(-3, 5) : r(-5, 3);
   return { left: `${left}%`, bottom: `${r(bandBottomMin, bandBottomMax)}%`, tilt, side };
 }
 
@@ -188,42 +211,102 @@ function generateSunflowerField() {
   const rng = seededRandom(42);
   const r = (min, max) => min + rng() * (max - min);
 
-  // Band 1 — Far hilltop: tiny, very dimmed, narrow gap
-  const far = Array.from({ length: 60 }, () => {
-    const pos = sidePosition(rng, 42, 52, 0.9);
-    return { ...pos, height: `${r(2, 5)}vh`, sway: r(4.5, 6),
-      z: 3, opacity: 0.35, filter: "brightness(0.65) saturate(0.4)" };
+  // DENSE FIELD - Many flowers, tightly packed, going all the way back
+
+  // Band 0 — Horizon line: tiniest dots at the very back
+  const horizon = Array.from({ length: 200 }, () => {
+    const pos = sidePosition(rng, 58, 66, 0.99);
+    return { ...pos, height: `${r(0.5, 1.5)}vh`, sway: r(6, 8),
+      z: 2, opacity: 0.2, filter: "brightness(0.5) saturate(0.25)" };
   });
 
-  // Band 2 — Upper mid: small, dimmed
-  const upperMid = Array.from({ length: 65 }, () => {
-    const pos = sidePosition(rng, 36, 44, 0.7);
-    return { ...pos, height: `${r(4, 7)}vh`, sway: r(4, 5.5),
-      z: 4, opacity: 0.5, filter: "brightness(0.72) saturate(0.5)" };
+  // Band 1 — Very far distance: tiny dots
+  const veryFar = Array.from({ length: 180 }, () => {
+    const pos = sidePosition(rng, 54, 62, 0.98);
+    return { ...pos, height: `${r(1, 2.5)}vh`, sway: r(5, 7),
+      z: 3, opacity: 0.25, filter: "brightness(0.55) saturate(0.3)" };
   });
 
-  // Band 3 — Mid field: medium
-  const mid = Array.from({ length: 60 }, () => {
-    const pos = sidePosition(rng, 28, 38, 0.5);
-    return { ...pos, height: `${r(7, 12)}vh`, sway: r(3.5, 5),
-      z: 4, opacity: 0.65, filter: "brightness(0.8) saturate(0.65)" };
+  // Band 2 — Far distance: tiny, dimmed, dense
+  const far = Array.from({ length: 160 }, () => {
+    const pos = sidePosition(rng, 48, 56, 0.95);
+    return { ...pos, height: `${r(1.5, 4)}vh`, sway: r(5, 7),
+      z: 3, opacity: 0.3, filter: "brightness(0.6) saturate(0.35)" };
   });
 
-  // Band 4 — Lower mid: medium-large, wider gap
-  const lowerMid = Array.from({ length: 55 }, () => {
-    const pos = sidePosition(rng, 20, 30, 0.3);
-    return { ...pos, height: `${r(11, 18)}vh`, sway: r(3.2, 4.8),
-      z: 5, opacity: 0.8, filter: "brightness(0.88) saturate(0.8)" };
+  // Band 3 — Upper mid distance: small, dimmed
+  const upperMid = Array.from({ length: 150 }, () => {
+    const pos = sidePosition(rng, 40, 48, 0.85);
+    return { ...pos, height: `${r(3, 6)}vh`, sway: r(4.5, 6),
+      z: 3, opacity: 0.4, filter: "brightness(0.65) saturate(0.45)" };
   });
 
-  // Band 5 — Foreground: large, vivid, widest gap
-  const front = Array.from({ length: 50 }, () => {
-    const pos = sidePosition(rng, 8, 24, 0.1);
-    return { ...pos, height: `${r(18, 32)}vh`, sway: r(3, 4.5),
+  // Band 4 — Mid field: medium size
+  const mid = Array.from({ length: 130 }, () => {
+    const pos = sidePosition(rng, 32, 42, 0.65);
+    return { ...pos, height: `${r(5, 10)}vh`, sway: r(4, 5.5),
+      z: 4, opacity: 0.55, filter: "brightness(0.75) saturate(0.6)" };
+  });
+
+  // Band 5 — Lower mid: medium-large
+  const lowerMid = Array.from({ length: 110 }, () => {
+    const pos = sidePosition(rng, 24, 34, 0.45);
+    return { ...pos, height: `${r(9, 16)}vh`, sway: r(3.5, 5),
+      z: 5, opacity: 0.75, filter: "brightness(0.85) saturate(0.75)" };
+  });
+
+  // Band 6 — Near foreground: large
+  const nearFront = Array.from({ length: 90 }, () => {
+    const pos = sidePosition(rng, 14, 26, 0.25);
+    return { ...pos, height: `${r(14, 24)}vh`, sway: r(3, 4.5),
+      z: 5, opacity: 0.9, filter: "brightness(0.92) saturate(0.85)" };
+  });
+
+  // Band 7 — Foreground: largest, vivid
+  const front = Array.from({ length: 70 }, () => {
+    const pos = sidePosition(rng, 4, 18, 0.1);
+    return { ...pos, height: `${r(22, 38)}vh`, sway: r(2.8, 4),
       z: 6, opacity: 1, filter: "none" };
   });
 
-  return { back: [...far, ...upperMid, ...mid], front: [...lowerMid, ...front] };
+  // Extra edge flowers on far left - pack the left edge but away from road
+  const edgeLeft = Array.from({ length: 50 }, () => {
+    const bottom = r(8, 55);
+    const progress = bottom / 55;
+    return {
+      left: `${r(-12, 12)}%`,
+      bottom: `${bottom}%`,
+      height: `${2 + (1 - progress) * 28}vh`,
+      tilt: r(-2, 4),
+      side: "left",
+      sway: r(3, 5),
+      z: progress < 0.4 ? 6 : 4,
+      opacity: 0.3 + (1 - progress) * 0.7,
+      filter: progress > 0.6 ? "brightness(0.65) saturate(0.45)" : "none"
+    };
+  });
+
+  // Extra edge flowers on far right - pack the right edge
+  const edgeRight = Array.from({ length: 50 }, () => {
+    const bottom = r(8, 55);
+    const progress = bottom / 55;
+    return {
+      left: `${r(88, 112)}%`,
+      bottom: `${bottom}%`,
+      height: `${2 + (1 - progress) * 28}vh`,
+      tilt: r(-4, 2),
+      side: "right",
+      sway: r(3, 5),
+      z: progress < 0.4 ? 6 : 4,
+      opacity: 0.3 + (1 - progress) * 0.7,
+      filter: progress > 0.6 ? "brightness(0.65) saturate(0.45)" : "none"
+    };
+  });
+
+  return {
+    back: [...horizon, ...veryFar, ...far, ...upperMid, ...mid],
+    front: [...lowerMid, ...nearFront, ...front, ...edgeLeft, ...edgeRight]
+  };
 }
 
 const sunflowerField = generateSunflowerField();
@@ -297,8 +380,8 @@ function Sluglord() {
     <div
       className="absolute z-[9]
                  left-1/2 -translate-x-1/2
-                 bottom-[6%] sm:bottom-[4%]
-                 h-[46vh] sm:h-[52vh] aspect-[4/5]"
+                 bottom-[-4%] sm:bottom-[-6%] md:bottom-[-8%] lg:bottom-[-10%]
+                 h-[55vh] sm:h-[62vh] md:h-[68vh] lg:h-[72vh] aspect-[4/5]"
     >
       {/* Enlightened glow / halo behind character */}
       <div
@@ -310,17 +393,20 @@ function Sluglord() {
         }}
       />
 
-      {/* Ground shadow beneath character */}
+      {/* Ground shadow beneath character - helps blend with paved road */}
       <div
-        className="absolute bottom-[-4%] left-1/2 -translate-x-1/2 pointer-events-none"
-        style={{ width: "80%", height: "8%" }}
+        className="absolute bottom-[18%] left-1/2 -translate-x-1/2 pointer-events-none"
+        style={{ width: "90%", height: "15%" }}
       >
         {config.assets.sluglordShadow ? (
           <img src={config.assets.sluglordShadow} alt="" className="w-full h-full object-contain" draggable={false} />
         ) : (
           <div
             className="w-full h-full rounded-[50%]"
-            style={{ backgroundColor: "rgba(0,0,0,0.18)", filter: "blur(6px)" }}
+            style={{
+              background: "radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 50%, transparent 80%)",
+              filter: "blur(6px)"
+            }}
           />
         )}
       </div>
@@ -355,6 +441,82 @@ function Sluglord() {
 
 function FrontSunflowers() {
   return <SunflowerLayer flowers={sunflowerField.front} keyPrefix="front" placeholderLabel="FRONT SUNFLOWERS" />;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOREGROUND SUNFLOWERS — Animated flowers framing the scene
+   Large sunflowers on left/right edges for depth and movement
+   ═══════════════════════════════════════════════════════════════════ */
+const foregroundFlowers = [
+  // Left side - large foreground flowers (lowered to ground)
+  { left: "-3%", bottom: "-8%", height: "38vh", tilt: 8, sway: 3.2, z: 10 },
+  { left: "2%", bottom: "-5%", height: "32vh", tilt: 12, sway: 3.5, z: 10 },
+  { left: "-5%", bottom: "-4%", height: "28vh", tilt: 5, sway: 3.8, z: 9 },
+  { left: "6%", bottom: "-7%", height: "35vh", tilt: 10, sway: 3.3, z: 10 },
+  { left: "1%", bottom: "-2%", height: "24vh", tilt: 7, sway: 4.0, z: 9 },
+  { left: "9%", bottom: "-6%", height: "30vh", tilt: 14, sway: 3.6, z: 10 },
+  { left: "-2%", bottom: "0%", height: "22vh", tilt: 6, sway: 4.2, z: 9 },
+  { left: "4%", bottom: "-3%", height: "27vh", tilt: 9, sway: 3.7, z: 9 },
+  { left: "11%", bottom: "-8%", height: "33vh", tilt: 11, sway: 3.4, z: 10 },
+  { left: "7%", bottom: "1%", height: "20vh", tilt: 8, sway: 4.1, z: 8 },
+  { left: "13%", bottom: "-6%", height: "29vh", tilt: 13, sway: 3.5, z: 10 },
+  { left: "-6%", bottom: "-6%", height: "34vh", tilt: 4, sway: 3.3, z: 10 },
+  { left: "5%", bottom: "3%", height: "18vh", tilt: 10, sway: 4.3, z: 8 },
+  { left: "14%", bottom: "-4%", height: "25vh", tilt: 15, sway: 3.8, z: 9 },
+  { left: "0%", bottom: "5%", height: "16vh", tilt: 6, sway: 4.5, z: 7 },
+  { left: "16%", bottom: "-5%", height: "28vh", tilt: 12, sway: 3.6, z: 9 },
+  { left: "10%", bottom: "2%", height: "17vh", tilt: 9, sway: 4.4, z: 7 },
+
+  // Right side - large foreground flowers (lowered to ground)
+  { left: "94%", bottom: "-8%", height: "36vh", tilt: -10, sway: 3.4, z: 10 },
+  { left: "98%", bottom: "-4%", height: "30vh", tilt: -8, sway: 3.6, z: 10 },
+  { left: "91%", bottom: "-6%", height: "33vh", tilt: -12, sway: 3.2, z: 10 },
+  { left: "96%", bottom: "-2%", height: "26vh", tilt: -6, sway: 3.9, z: 9 },
+  { left: "100%", bottom: "-7%", height: "34vh", tilt: -5, sway: 3.5, z: 10 },
+  { left: "88%", bottom: "-5%", height: "31vh", tilt: -14, sway: 3.5, z: 10 },
+  { left: "102%", bottom: "0%", height: "23vh", tilt: -7, sway: 4.0, z: 9 },
+  { left: "93%", bottom: "-3%", height: "28vh", tilt: -9, sway: 3.7, z: 9 },
+  { left: "86%", bottom: "-7%", height: "34vh", tilt: -11, sway: 3.3, z: 10 },
+  { left: "90%", bottom: "1%", height: "21vh", tilt: -8, sway: 4.2, z: 8 },
+  { left: "84%", bottom: "-4%", height: "29vh", tilt: -13, sway: 3.5, z: 10 },
+  { left: "104%", bottom: "-5%", height: "32vh", tilt: -4, sway: 3.4, z: 10 },
+  { left: "92%", bottom: "2%", height: "19vh", tilt: -10, sway: 4.3, z: 8 },
+  { left: "82%", bottom: "-6%", height: "26vh", tilt: -15, sway: 3.7, z: 9 },
+  { left: "97%", bottom: "4%", height: "17vh", tilt: -6, sway: 4.4, z: 7 },
+  { left: "80%", bottom: "-3%", height: "27vh", tilt: -12, sway: 3.6, z: 9 },
+  { left: "87%", bottom: "3%", height: "18vh", tilt: -9, sway: 4.5, z: 7 },
+];
+
+function ForegroundSunflowers() {
+  if (!config.assets.sunflower) return null;
+
+  return (
+    <>
+      {foregroundFlowers.map((s, i) => (
+        <div
+          key={`fg-sunflower-${i}`}
+          className="absolute aspect-[2/5]"
+          style={{
+            left: s.left,
+            bottom: s.bottom,
+            height: s.height,
+            zIndex: s.z,
+            transform: `rotate(${s.tilt}deg)`,
+            transformOrigin: "bottom center",
+            animation: `grass-sway ${s.sway}s ease-in-out infinite`,
+          }}
+        >
+          <img
+            src={config.assets.sunflower}
+            alt=""
+            className="w-full h-full object-contain"
+            style={{ filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))" }}
+            draggable={false}
+          />
+        </div>
+      ))}
+    </>
+  );
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -463,28 +625,12 @@ function GodRays() {
    LAYER 10 — FOREGROUND GRASS (flipped, warmer tones)
    ═══════════════════════════════════════════════════════════════════ */
 function ForegroundGrass() {
+  // Only render if grass asset exists
+  if (!config.assets.grassForeground) return null;
+
   return (
     <div className="absolute bottom-0 left-0 right-0 h-[18%] z-[8] pointer-events-none overflow-hidden">
-      {config.assets.grassForeground ? (
-        <img src={config.assets.grassForeground} alt="" className="w-full h-full object-cover object-bottom" style={{ transform: "scaleY(-1)" }} draggable={false} />
-      ) : (
-        <div className="w-full h-full flex items-end">
-          {Array.from({ length: 40 }).map((_, i) => (
-            <div
-              key={i}
-              className="flex-1 rounded-t-full"
-              style={{
-                height: `${45 + Math.sin(i * 0.7) * 45}%`,
-                transformOrigin: "bottom center",
-                animation: `grass-sway ${3.0 + (i % 4) * 0.5}s ease-in-out infinite`,
-                animationDelay: `${i * 0.1}s`,
-                backgroundColor: i % 3 === 0 ? "#5A7232" : "#6A8A3A",
-                opacity: 0.8,
-              }}
-            />
-          ))}
-        </div>
-      )}
+      <img src={config.assets.grassForeground} alt="" className="w-full h-full object-cover object-bottom" style={{ transform: "scaleY(-1)" }} draggable={false} />
     </div>
   );
 }
@@ -530,8 +676,8 @@ function SignButton({ label, onClick, className = "" }) {
       >
         <img src={config.assets.woodenSign} alt="" className="w-36 sm:w-44" draggable={false} />
         <span
-          className="absolute inset-0 flex items-center justify-center text-xs sm:text-sm font-bold"
-          style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5" }}
+          className="absolute inset-0 flex items-center justify-center text-base sm:text-lg font-bold"
+          style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5", textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000" }}
         >
           {label}
         </span>
@@ -544,7 +690,7 @@ function SignButton({ label, onClick, className = "" }) {
       style={{ backgroundColor: "rgba(107,83,68,0.88)", borderColor: "rgba(107,83,68,0.5)" }}
       onClick={onClick}
     >
-      <span className="text-xs sm:text-sm font-bold" style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5" }}>
+      <span className="text-base sm:text-lg font-bold" style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5", textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000" }}>
         {label}
       </span>
     </div>
@@ -593,8 +739,8 @@ function SignStack({ onOpenModal }) {
           >
             <img src={config.assets.woodenSign} alt="Sign" className="w-36 sm:w-44" draggable={false} />
             <span
-              className="absolute inset-0 flex items-center justify-center text-[10px] sm:text-xs font-bold px-2"
-              style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5" }}
+              className="absolute inset-0 flex items-center justify-center text-base sm:text-lg font-bold px-2"
+              style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5", textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000" }}
             >
               {"\uD835\uDCD2\uD835\uDCD0"}
             </span>
@@ -607,8 +753,8 @@ function SignStack({ onOpenModal }) {
             title="Click to copy contract address"
           >
             <span
-              className="text-xs sm:text-sm font-bold"
-              style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5" }}
+              className="text-base sm:text-lg font-bold"
+              style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5", textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000" }}
             >
               {"\uD835\uDCD2\uD835\uDCD0"}
             </span>
@@ -663,8 +809,8 @@ function SocialLinks() {
 function ModalOverlay({ onClose, children }) {
   return (
     <div
-      className="fixed inset-0 z-[50] flex items-center justify-center"
-      style={{ animation: "modal-fade 0.35s ease-out" }}
+      className="fixed inset-0 z-[50] flex items-center justify-center overflow-hidden"
+      style={{ animation: "modal-fade 0.35s ease-out", isolation: "isolate" }}
       onClick={onClose}
     >
       {/* Scene backdrop — sky + hills + warm overlay */}
@@ -693,7 +839,7 @@ function ModalOverlay({ onClose, children }) {
           />
         )}
         {/* Warm color wash */}
-        <div className="absolute inset-0" style={{ backgroundColor: "rgba(60,40,20,0.55)" }} />
+        <div className="absolute inset-0" style={{ backgroundColor: "rgba(40,25,10,0.85)" }} />
       </div>
 
       {/* Decorative sunflowers on left and right edges */}
@@ -759,7 +905,9 @@ function ModalOverlay({ onClose, children }) {
 
         {/* Scrollable content */}
         <div className="relative overflow-y-auto max-h-[90vh] px-8 py-8 sm:px-14 sm:py-10">
-          {children}
+          <div className="flex flex-col items-center text-center w-full">
+            {children}
+          </div>
         </div>
       </div>
     </div>
@@ -772,22 +920,9 @@ function ModalOverlay({ onClose, children }) {
 function LoreModal({ onClose }) {
   return (
     <ModalOverlay onClose={onClose}>
-      {/* Logo */}
-      {config.assets.titleLogo && (
-        <div className="flex justify-center mb-5">
-          <img
-            src={config.assets.titleLogo}
-            alt=""
-            className="w-48 sm:w-56"
-            style={{ filter: "drop-shadow(0 2px 6px rgba(107,83,68,0.3))" }}
-            draggable={false}
-          />
-        </div>
-      )}
-
       {/* Title */}
       <h2
-        className="text-xl sm:text-2xl font-bold text-center mb-5"
+        className="w-full text-xl sm:text-2xl font-bold text-center mb-5"
         style={{ fontFamily: "'Baloo 2', sans-serif", color: "#5A3E2B" }}
       >
         The Legend of Sluglord
@@ -795,12 +930,12 @@ function LoreModal({ onClose }) {
 
       {/* Sluglord character */}
       {config.assets.sluglordOpen && (
-        <div className="flex justify-center mb-6">
+        <div className="w-full flex justify-center mb-6">
           <div className="relative">
             <img
               src={config.assets.sluglordOpen}
               alt="Sluglord"
-              className="h-32 sm:h-40 object-contain relative z-[1]"
+              className="h-40 sm:h-52 w-auto max-w-[80vw] object-contain relative z-[1]"
               style={{
                 filter: "drop-shadow(0 4px 12px rgba(80,50,30,0.35))",
                 animation: "sluglord-idle 8s ease-in-out infinite",
@@ -817,7 +952,7 @@ function LoreModal({ onClose }) {
       )}
 
       {/* Divider */}
-      <div className="flex items-center justify-center gap-3 mb-6">
+      <div className="w-full flex items-center justify-center gap-3 mb-6">
         <div className="h-px flex-1 max-w-16" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
         {config.assets.sunflower ? (
           <img src={config.assets.sunflower} alt="" className="w-7 h-7 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
@@ -829,7 +964,7 @@ function LoreModal({ onClose }) {
 
       {/* Story paragraphs */}
       <div
-        className="max-w-xl mx-auto space-y-5 text-[15px] sm:text-base leading-[1.85] text-center"
+        className="w-full max-w-xl space-y-5 text-[15px] sm:text-base leading-[1.85] text-center"
         style={{ fontFamily: "'Baloo 2', sans-serif", color: "#4A3728" }}
       >
         <p>
@@ -862,7 +997,7 @@ function LoreModal({ onClose }) {
 
       {/* Quote */}
       <div
-        className="max-w-xl mx-auto mt-7 mb-1 rounded-xl px-5 py-5 text-center"
+        className="w-full max-w-xl mt-7 mb-1 rounded-xl px-5 py-5 text-center"
         style={{
           backgroundColor: "rgba(139,115,85,0.1)",
           border: "1.5px solid rgba(139,115,85,0.2)",
@@ -891,32 +1026,19 @@ function MemeGallery({ onClose }) {
 
   return (
     <ModalOverlay onClose={onClose}>
-      {/* Logo */}
-      {config.assets.titleLogo && (
-        <div className="flex justify-center mb-5">
-          <img
-            src={config.assets.titleLogo}
-            alt=""
-            className="w-48 sm:w-56"
-            style={{ filter: "drop-shadow(0 2px 6px rgba(107,83,68,0.3))" }}
-            draggable={false}
-          />
-        </div>
-      )}
-
       {/* Title */}
       <h2
-        className="text-xl sm:text-2xl font-bold text-center mb-1"
+        className="w-full text-xl sm:text-2xl font-bold text-center mb-1"
         style={{ fontFamily: "'Baloo 2', sans-serif", color: "#5A3E2B" }}
       >
         Memes
       </h2>
-      <p className="text-center text-xs sm:text-sm mb-6" style={{ color: "#8B7355", fontFamily: "'Baloo 2', sans-serif" }}>
+      <p className="w-full text-center text-xs sm:text-sm mb-6" style={{ color: "#8B7355", fontFamily: "'Baloo 2', sans-serif" }}>
         The finest Sluglord collection
       </p>
 
       {/* Divider */}
-      <div className="flex items-center justify-center gap-3 mb-6">
+      <div className="w-full flex items-center justify-center gap-3 mb-6">
         <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
         {config.assets.sunflower ? (
           <img src={config.assets.sunflower} alt="" className="w-7 h-7 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
@@ -927,7 +1049,7 @@ function MemeGallery({ onClose }) {
       </div>
 
       {/* Grid */}
-      <div className="max-w-xl mx-auto grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+      <div className="w-full max-w-xl grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
         {slots.map((item, i) => (
           <div
             key={i}
@@ -981,9 +1103,11 @@ export default function Scene() {
         <SunGlow />
         <DistantHills />
         <MainHill />
-        <BackSunflowers />
-        <Sluglord />
-        <FrontSunflowers />
+        {/* Sunflowers baked into hill asset, animated ones in foreground */}
+        {/* <BackSunflowers /> */}
+        {/* Sluglord is now integrated into MainHill asset */}
+        {/* <Sluglord /> */}
+        <ForegroundSunflowers />
         <Pollen />
         <GodRays />
         <ForegroundGrass />
