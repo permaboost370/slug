@@ -958,22 +958,20 @@ function LoreModal({ onClose }) {
         The Legend of Sluglord
       </h2>
 
-      {/* Sluglord character */}
-      {config.assets.sluglordOpen && (
+      {/* Sluglord badge */}
+      {config.assets.sluglordBadge && (
         <div className="w-full flex justify-center mb-6">
           <div className="relative">
             <img
-              src={config.assets.sluglordOpen}
+              src={config.assets.sluglordBadge}
               alt="Sluglord"
-              className="h-40 sm:h-52 w-auto max-w-[80vw] object-contain relative z-[1]"
+              className="h-44 sm:h-56 w-auto max-w-[80vw] object-contain relative z-[1]"
               style={{
                 filter: "drop-shadow(0 4px 12px rgba(80,50,30,0.35))",
-                animation: "sluglord-idle 8s ease-in-out infinite",
-                transformOrigin: "bottom center",
               }}
               draggable={false}
             />
-            {/* Glow behind character */}
+            {/* Glow behind badge */}
             <div className="absolute inset-0 -m-6 rounded-full pointer-events-none" style={{
               background: "radial-gradient(ellipse at center, rgba(212,160,23,0.15) 0%, transparent 65%)",
             }} />

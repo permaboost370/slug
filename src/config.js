@@ -60,6 +60,9 @@ const config = {
     iconTelegram: "/assets/icon-telegram.webp",
     iconDex: "/assets/icon-dex.webp",
 
+    // Lore modal badge
+    sluglordBadge: "/assets/sluglord-badge.webp",
+
     // Meta assets (not rendered in scene)
     ogCard: null,                     // "/assets/og-card.webp"
     favicon: null,                    // "/assets/favicon.png"
