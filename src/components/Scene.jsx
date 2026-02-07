@@ -1115,6 +1115,49 @@ function MemeGallery({ onClose }) {
 /* ═══════════════════════════════════════════════════════════════════
    PROOF GALLERY — Image gallery for proof/evidence
    ═══════════════════════════════════════════════════════════════════ */
+/** Video player that crops dark/empty areas to focus on visible content */
+function ProofVideo({ src }) {
+  const [ratio, setRatio] = useState(9 / 12);
+
+  const handleMetadata = useCallback((e) => {
+    const v = e.target;
+    if (v.videoWidth && v.videoHeight) {
+      const nativeRatio = v.videoWidth / v.videoHeight;
+      // Crop to ~55% of original height to remove dark ceiling/floor
+      setRatio(nativeRatio / 0.55);
+    }
+  }, []);
+
+  return (
+    <div className="mb-6 flex justify-center w-full">
+      <div
+        className="rounded-xl overflow-hidden"
+        style={{
+          maxHeight: "min(45vh, 340px)",
+          maxWidth: "min(55vw, 260px)",
+          width: "fit-content",
+          aspectRatio: ratio,
+          border: "2px solid rgba(139,115,85,0.2)",
+          boxShadow: "0 2px 8px rgba(80,50,30,0.15)",
+        }}
+      >
+        <video
+          src={src}
+          className="block w-full h-full"
+          style={{
+            objectFit: "cover",
+            objectPosition: "center 58%",
+          }}
+          controls
+          playsInline
+          preload="metadata"
+          onLoadedMetadata={handleMetadata}
+        />
+      </div>
+    </div>
+  );
+}
+
 function ProofGallery({ onClose }) {
   const proofs = config.content?.proof || [];
   const videos = proofs.filter(p => p.type === "video");
@@ -1147,13 +1190,7 @@ function ProofGallery({ onClose }) {
 
       {/* Video on top, centered */}
       {videos.map((v, i) => (
-        <div
-          key={`video-${i}`}
-          className="mb-6 rounded-xl overflow-hidden inline-block max-h-[50vh]"
-          style={{ border: "2px solid rgba(139,115,85,0.2)", boxShadow: "0 2px 8px rgba(80,50,30,0.15)" }}
-        >
-          <video src={v.url} className="max-h-[50vh] rounded-xl" controls playsInline />
-        </div>
+        <ProofVideo key={`video-${i}`} src={v.url} />
       ))}
 
       {/* Image grid */}
