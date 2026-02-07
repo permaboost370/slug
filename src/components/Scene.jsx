@@ -745,7 +745,7 @@ function SignStack({ onOpenModal }) {
   return (
     <div className="absolute z-[12] top-[52px] right-4 sm:top-6 sm:right-6 flex flex-col items-center gap-1">
       <SignButton label={"\uD835\uDCDB\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE"} onClick={() => onOpenModal("lore")} />
-      <SignButton label={"\uD835\uDCAB\uD835\uDCFB\uD835\uDCF8\uD835\uDCF8\uD835\uDCF1"} onClick={() => onOpenModal("proof")} />
+      <SignButton label={"\uD835\uDCD5\uD835\uDCFB\uD835\uDCF8\uD835\uDCF8\uD835\uDCEF"} onClick={() => onOpenModal("proof")} />
 
       {/* Contract address sign */}
       <div className="relative">
