@@ -1119,7 +1119,9 @@ function MemeGallery({ onClose }) {
    ═══════════════════════════════════════════════════════════════════ */
 function ProofGallery({ onClose }) {
   const proofs = config.content?.proof || [];
-  const slots = proofs.length > 0 ? proofs : Array.from({ length: 6 }, (_, i) => ({ placeholder: true, index: i + 1 }));
+  const videos = proofs.filter(p => p.type === "video");
+  const images = proofs.filter(p => p.type !== "video");
+  const imageSlots = images.length > 0 ? images : Array.from({ length: 6 }, (_, i) => ({ placeholder: true, index: i + 1 }));
 
   return (
     <ModalOverlay onClose={onClose}>
@@ -1145,9 +1147,20 @@ function ProofGallery({ onClose }) {
         <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to left, transparent, #8B7355)" }} />
       </div>
 
-      {/* Grid */}
+      {/* Video on top, centered */}
+      {videos.map((v, i) => (
+        <div
+          key={`video-${i}`}
+          className="w-full max-w-md mb-6 rounded-xl overflow-hidden"
+          style={{ border: "2px solid rgba(139,115,85,0.2)", boxShadow: "0 2px 8px rgba(80,50,30,0.15)" }}
+        >
+          <video src={v.url} className="w-full" controls playsInline />
+        </div>
+      ))}
+
+      {/* Image grid */}
       <div className="w-full max-w-xl grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-        {slots.map((item, i) => (
+        {imageSlots.map((item, i) => (
           <div
             key={i}
             className="aspect-square rounded-xl flex items-center justify-center overflow-hidden transition-transform hover:scale-[1.03]"
@@ -1175,8 +1188,6 @@ function ProofGallery({ onClose }) {
                   PROOF {item.index}
                 </span>
               </div>
-            ) : item.type === "video" ? (
-              <video src={item.url} className="w-full h-full object-cover" controls playsInline />
             ) : (
               <img src={item.url} alt={item.alt || `Proof ${i + 1}`} className="w-full h-full object-cover" draggable={false} />
             )}
