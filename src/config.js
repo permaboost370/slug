@@ -17,6 +17,7 @@ const config = {
 
   content: {
     memes: [],  // Future meme image URLs go here
+    proof: [],  // Proof image URLs go here
   },
 
   assets: {

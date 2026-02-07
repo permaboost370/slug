@@ -745,7 +745,7 @@ function SignStack({ onOpenModal }) {
   return (
     <div className="absolute z-[12] top-[52px] right-4 sm:top-6 sm:right-6 flex flex-col items-center gap-1">
       <SignButton label={"\uD835\uDCDB\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE"} onClick={() => onOpenModal("lore")} />
-      <SignButton label={"\uD835\uDCDC\uD835\uDCEE\uD835\uDCF6\uD835\uDCEE\uD835\uDCFC"} onClick={() => onOpenModal("memes")} />
+      <SignButton label={"\uD835\uDCAB\uD835\uDCFB\uD835\uDCF8\uD835\uDCF8\uD835\uDCF1"} onClick={() => onOpenModal("proof")} />
 
       {/* Contract address sign */}
       <div className="relative">
@@ -1115,6 +1115,78 @@ function MemeGallery({ onClose }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   PROOF GALLERY — Image gallery for proof/evidence
+   ═══════════════════════════════════════════════════════════════════ */
+function ProofGallery({ onClose }) {
+  const proofs = config.content?.proof || [];
+  const slots = proofs.length > 0 ? proofs : Array.from({ length: 6 }, (_, i) => ({ placeholder: true, index: i + 1 }));
+
+  return (
+    <ModalOverlay onClose={onClose}>
+      {/* Title */}
+      <h2
+        className="w-full text-xl sm:text-2xl font-bold text-center mb-1"
+        style={{ fontFamily: "'Baloo 2', sans-serif", color: "#5A3E2B" }}
+      >
+        Proof
+      </h2>
+      <p className="w-full text-center text-xs sm:text-sm mb-6" style={{ color: "#8B7355", fontFamily: "'Baloo 2', sans-serif" }}>
+        Receipts from the Sluglord
+      </p>
+
+      {/* Divider */}
+      <div className="w-full flex items-center justify-center gap-3 mb-6">
+        <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
+        {config.assets.sunflower ? (
+          <img src={config.assets.sunflower} alt="" className="w-7 h-7 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
+        ) : (
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#8B7355" }} />
+        )}
+        <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to left, transparent, #8B7355)" }} />
+      </div>
+
+      {/* Grid */}
+      <div className="w-full max-w-xl grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+        {slots.map((item, i) => (
+          <div
+            key={i}
+            className="aspect-square rounded-xl flex items-center justify-center overflow-hidden transition-transform hover:scale-[1.03]"
+            style={{
+              border: item.placeholder ? "2px dashed rgba(139,115,85,0.25)" : "2px solid rgba(139,115,85,0.2)",
+              backgroundColor: item.placeholder ? "rgba(139,115,85,0.06)" : "transparent",
+              boxShadow: item.placeholder ? "none" : "0 2px 8px rgba(80,50,30,0.15)",
+            }}
+          >
+            {item.placeholder ? (
+              <div className="flex flex-col items-center gap-2">
+                {config.assets.sunflower && (
+                  <img
+                    src={config.assets.sunflower}
+                    alt=""
+                    className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+                    style={{ opacity: 0.2 }}
+                    draggable={false}
+                  />
+                )}
+                <span
+                  className="text-[10px] sm:text-xs tracking-wider font-medium"
+                  style={{ color: "rgba(139,115,85,0.4)", fontFamily: "'Baloo 2', sans-serif" }}
+                >
+                  PROOF {item.index}
+                </span>
+              </div>
+            ) : (
+              <img src={item.url} alt={item.alt || `Proof ${i + 1}`} className="w-full h-full object-cover" draggable={false} />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="h-4" />
+    </ModalOverlay>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    SCENE — Main composition (The Hilltop Moment)
    ═══════════════════════════════════════════════════════════════════ */
 export default function Scene() {
@@ -1145,7 +1217,7 @@ export default function Scene() {
 
       {/* Modals */}
       {modalOpen === "lore" && <LoreModal onClose={() => setModalOpen(null)} />}
-      {modalOpen === "memes" && <MemeGallery onClose={() => setModalOpen(null)} />}
+      {modalOpen === "proof" && <ProofGallery onClose={() => setModalOpen(null)} />}
     </>
   );
 }
