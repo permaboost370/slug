@@ -17,7 +17,18 @@ const config = {
 
   content: {
     memes: [],  // Future meme image URLs go here
-    proof: [],  // Proof image URLs go here
+    proof: [
+      { url: "/assets/proof/photo_2026-02-05_21-13-58.jpg" },
+      { url: "/assets/proof/photo_2026-02-05_21-13-59.jpg" },
+      { url: "/assets/proof/photo_2026-02-05_21-14-03.jpg" },
+      { url: "/assets/proof/photo_2026-02-05_21-14-03 (2).jpg" },
+      { url: "/assets/proof/photo_2026-02-05_21-14-29.jpg" },
+      { url: "/assets/proof/photo_2026-02-05_21-14-44.jpg" },
+      { url: "/assets/proof/photo_2026-02-05_23-39-32.jpg" },
+      { url: "/assets/proof/photo_2026-02-05_23-39-34.jpg" },
+      { url: "/assets/proof/photo_2026-02-07_19-47-04.jpg" },
+      { url: "/assets/proof/IMG_1818.MP4", type: "video" },
+    ],
   },
 
   assets: {

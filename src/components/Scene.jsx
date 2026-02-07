@@ -1175,6 +1175,8 @@ function ProofGallery({ onClose }) {
                   PROOF {item.index}
                 </span>
               </div>
+            ) : item.type === "video" ? (
+              <video src={item.url} className="w-full h-full object-cover" controls playsInline />
             ) : (
               <img src={item.url} alt={item.alt || `Proof ${i + 1}`} className="w-full h-full object-cover" draggable={false} />
             )}
