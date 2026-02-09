@@ -63,6 +63,12 @@ function SunriseSky() {
         )}
       </div>
 
+      {/* Warm wash to kill blue tones in the sky gradient */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, rgba(230,175,120,0.55) 0%, rgba(235,185,115,0.5) 35%, rgba(225,170,100,0.45) 60%, rgba(210,160,90,0.2) 85%, transparent 100%)" }}
+      />
+
       {/* Golden hour clouds overlay (screen blend makes black bg transparent) */}
       {config.assets.clouds && (
         <>
