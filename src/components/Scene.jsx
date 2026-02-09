@@ -63,53 +63,8 @@ function SunriseSky() {
         )}
       </div>
 
-      {/* Warm wash to kill blue tones in the sky gradient */}
-      <div
-        className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, rgba(230,175,120,0.55) 0%, rgba(235,185,115,0.5) 35%, rgba(225,170,100,0.45) 60%, rgba(210,160,90,0.2) 85%, transparent 100%)" }}
-      />
-
-      {/* Golden hour clouds overlay (screen blend makes black bg transparent) */}
-      {config.assets.clouds && (
-        <>
-          {/* Primary clouds — upper sky */}
-          <div className="absolute z-[2] pointer-events-none" style={{ top: "-15%", left: "-10%", right: "-10%", bottom: "-40%" }}>
-            <img
-              src={config.assets.clouds}
-              alt=""
-              className="w-full h-full object-cover"
-              style={{
-                mixBlendMode: "screen",
-                opacity: 0.9,
-                objectPosition: "center 85%",
-                animation: "sky-drift 70s ease-in-out infinite",
-                scale: "1.25",
-              }}
-              draggable={false}
-            />
-          </div>
-          {/* Secondary clouds — fills mid-sky gap, flipped & offset */}
-          <div className="absolute z-[2] pointer-events-none" style={{ top: "15%", left: "-10%", right: "-10%", bottom: "-60%" }}>
-            <img
-              src={config.assets.clouds}
-              alt=""
-              className="w-full h-full object-cover"
-              style={{
-                mixBlendMode: "screen",
-                opacity: 0.55,
-                objectPosition: "center 90%",
-                transform: "scaleX(-1)",
-                animation: "sky-drift 90s ease-in-out infinite reverse",
-                scale: "1.3",
-              }}
-              draggable={false}
-            />
-          </div>
-        </>
-      )}
-
-      {/* Drifting cloud shapes (only when no sky or cloud image) */}
-      {!config.assets.sky && !config.assets.clouds && (
+      {/* Drifting cloud shapes (only when no sky image) */}
+      {!config.assets.sky && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
           {[
             { top: "6%",  w: "18%", h: "7%",  dur: "80s", delay: "0s"    },

@@ -36,8 +36,7 @@ const config = {
     titleLogo: "/assets/Sluglord Assets – Refined Versions_Sluglord Text2.webp",
 
     // Scene layers — optimized WebP
-    sky: "/assets/golden-hour-sky.png",
-    clouds: "/assets/golden-hour-clouds.png",
+    sky: "/assets/sky-clouds.webp",
     hillsBackground: "/assets/hills-background.webp",
     hillMain: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (Open Eyes, Holding Sunflower).webp",  // Fallback
     hillMainOpen: "/assets/Sluglord Assets ΓÇô Refined Versions_Main Hill Sunflower Field (Open Eyes, Holding Sunflower).webp",   // Eyes open
@@ -46,7 +45,7 @@ const config = {
     godRays: "/assets/Sluglord  website Assets_god-rays copy.webp",
 
     // Sunrise additions
-    sunGlow: "/assets/golden-hour-sun.png",
+    sunGlow: "/assets/Sun, Sky_Sun.webp",
     sluglordShadow: null,            // "/assets/sluglord-shadow.webp"
     pollen: null,                     // "/assets/pollen.webp" (sprite)
 
