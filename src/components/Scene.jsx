@@ -1108,6 +1108,8 @@ function LoreModal({ onClose }) {
           style={{ color: "#6B5340", fontFamily: "'Baloo 2', sans-serif" }}
         >
           -Your Truly 2024 this day of our Lord
+          <br />
+          Matt Furie
         </p>
       </div>
     </ModalOverlay>
