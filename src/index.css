@@ -103,10 +103,24 @@ body {
   100% { opacity: 0; transform: translateY(-4px); }
 }
 
-/* ── NEW: Sun pulse — gentle scale/opacity for sun orb ── */
+/* ── Sun pulse — gentle scale/opacity for sun orb ── */
 @keyframes sun-pulse {
   0%, 100% { transform: scale(1); opacity: 0.7; }
   50%      { transform: scale(1.06); opacity: 0.9; }
+}
+
+/* ── Sun halo — outer glow breathing (large, slow) ── */
+@keyframes sun-halo {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  30%      { transform: scale(1.12); opacity: 0.8; }
+  70%      { transform: scale(1.05); opacity: 0.6; }
+}
+
+/* ── Sun flare — inner ring counter-pulse ── */
+@keyframes sun-flare {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  40%      { transform: scale(1.15); opacity: 0.7; }
+  60%      { transform: scale(0.95); opacity: 0.5; }
 }
 
 /* ── NEW: Glow breathe — for enlightened halo behind character ── */

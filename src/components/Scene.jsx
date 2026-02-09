@@ -98,6 +98,24 @@ function SunriseSky() {
 function SunGlow() {
   return (
     <div className="absolute z-[2] pointer-events-none" style={{ top: "-18%", left: "-10%", width: "70%", height: "65%" }}>
+      {/* Outer warm halo — large, slow breathe */}
+      <div
+        className="absolute inset-[-20%] rounded-full"
+        style={{
+          background: "radial-gradient(circle at 50% 55%, rgba(255,220,100,0.3) 0%, rgba(255,180,60,0.12) 35%, transparent 65%)",
+          animation: "sun-halo 14s ease-in-out infinite",
+          filter: "blur(30px)",
+        }}
+      />
+      {/* Inner flare ring — faster counter-pulse */}
+      <div
+        className="absolute inset-[10%] rounded-full"
+        style={{
+          background: "radial-gradient(circle at 50% 55%, rgba(255,245,180,0.25) 0%, rgba(255,210,80,0.1) 40%, transparent 60%)",
+          animation: "sun-flare 8s ease-in-out infinite",
+          filter: "blur(12px)",
+        }}
+      />
       {config.assets.sunGlow ? (
         <img
           src={config.assets.sunGlow}
@@ -1116,7 +1134,7 @@ function MemeGallery({ onClose }) {
    PROOF GALLERY — Image gallery for proof/evidence
    ═══════════════════════════════════════════════════════════════════ */
 /** Video player that crops dark/empty areas to focus on visible content */
-function ProofVideo({ src }) {
+function ProofVideo({ src, poster }) {
   const [ratio, setRatio] = useState(9 / 12);
 
   const handleMetadata = useCallback((e) => {
@@ -1143,6 +1161,7 @@ function ProofVideo({ src }) {
       >
         <video
           src={src}
+          poster={poster}
           className="block w-full h-full"
           style={{
             objectFit: "cover",
@@ -1190,7 +1209,7 @@ function ProofGallery({ onClose }) {
 
       {/* Video on top, centered */}
       {videos.map((v, i) => (
-        <ProofVideo key={`video-${i}`} src={v.url} />
+        <ProofVideo key={`video-${i}`} src={v.url} poster={v.poster} />
       ))}
 
       {/* Image grid */}
