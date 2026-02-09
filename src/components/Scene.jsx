@@ -1091,29 +1091,11 @@ function LoreModal({ onClose }) {
         style={{ fontFamily: "'Baloo 2', sans-serif", color: "#4A3728" }}
       >
         <p>
-          <strong style={{ color: "#7B5B3A" }}>Sluglord</strong> is a mix of Pepe the Frog,
-          Jabba the Hutt and an enlightened being.
-        </p>
-        <p>
-          I was walking home up the hill I always walk some sunny morning after
-          dropping my daughter off at school. I said goodbye to a friend, turned
-          to walk away and saw a happy Buddha garden figurine with a happy smile,
-          arms wide open to the sky, soaking up the sun. The moment influenced
-          my idea.
-        </p>
-        <p>
-          I like showing the 'good' side of 'bad' guys. The flower represents
-          cosmic wonder and the beauty of life, the clouds, the rain, the soil,
-          the interconnectedness of everything. There is a good reason flowers
-          are popular in art.
-        </p>
-        <p>
-          The flower compliments the smile of the Sluglord and his outstretched
-          arms bask in the sun like the petals of a flower.
+          Sluglord is a mix of Pepe the Frog, Jabba the Hutt and an enlightened being. I was walking home up the hill I always walk some sunny morning after dropping my daughter off at school. I said goodbye to a friend, turned to walk away and saw a happy Buddha garden figurine with a happy smile, arms wide open to the sky, soaking up the sun. The moment influenced my idea. I like showing the 'good' side of 'bad' guys. The flower represents cosmic wonder and the beauty of life, the clouds, the rain, the soil, the interconnectedness of everything. There is a good reason flowers are popular in art. The flower compliments the smile of the sluglord and his outstretched arms bask in the sun like the pedals of a flower.
         </p>
       </div>
 
-      {/* Quote */}
+      {/* Attribution */}
       <div
         className="w-full max-w-xl mt-7 mb-1 rounded-xl px-5 py-5 text-center"
         style={{
@@ -1125,10 +1107,7 @@ function LoreModal({ onClose }) {
           className="text-base sm:text-lg italic leading-relaxed"
           style={{ color: "#6B5340", fontFamily: "'Baloo 2', sans-serif" }}
         >
-          "Slow is smooth, and smooth is fast."
-        </p>
-        <p className="text-[11px] mt-2 tracking-widest uppercase font-semibold" style={{ color: "#8B7355" }}>
-          The Sluglord Way
+          -Your Truly 2024 this day of our Lord
         </p>
       </div>
     </ModalOverlay>
