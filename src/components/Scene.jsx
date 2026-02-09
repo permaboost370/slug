@@ -63,8 +63,26 @@ function SunriseSky() {
         )}
       </div>
 
-      {/* Drifting cloud shapes (only when no sky image) */}
-      {!config.assets.sky && (
+      {/* Golden hour clouds overlay (screen blend makes black bg transparent) */}
+      {config.assets.clouds && (
+        <div className="absolute inset-0 z-[2] pointer-events-none">
+          <img
+            src={config.assets.clouds}
+            alt=""
+            className="w-full h-full object-cover"
+            style={{
+              mixBlendMode: "screen",
+              opacity: 0.85,
+              animation: "sky-drift 70s ease-in-out infinite",
+              scale: "1.08",
+            }}
+            draggable={false}
+          />
+        </div>
+      )}
+
+      {/* Drifting cloud shapes (only when no sky or cloud image) */}
+      {!config.assets.sky && !config.assets.clouds && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
           {[
             { top: "6%",  w: "18%", h: "7%",  dur: "80s", delay: "0s"    },
