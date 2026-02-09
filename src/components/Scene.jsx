@@ -555,6 +555,15 @@ const foregroundFlowers = [
   { left: "0%", bottom: "5%", height: "16vh", tilt: 6, sway: 4.5, z: 7 },
   { left: "16%", bottom: "-5%", height: "28vh", tilt: 12, sway: 3.6, z: 9 },
   { left: "10%", bottom: "2%", height: "17vh", tilt: 9, sway: 4.4, z: 7 },
+  { left: "-8%", bottom: "-10%", height: "40vh", tilt: 3, sway: 3.1, z: 10 },
+  { left: "8%", bottom: "-9%", height: "36vh", tilt: 16, sway: 3.3, z: 10 },
+  { left: "18%", bottom: "-7%", height: "26vh", tilt: 11, sway: 3.7, z: 9 },
+  { left: "-4%", bottom: "2%", height: "20vh", tilt: 7, sway: 4.2, z: 8 },
+  { left: "12%", bottom: "-3%", height: "23vh", tilt: 13, sway: 3.9, z: 9 },
+  { left: "3%", bottom: "-10%", height: "37vh", tilt: 6, sway: 3.2, z: 10 },
+  { left: "15%", bottom: "0%", height: "19vh", tilt: 10, sway: 4.1, z: 8 },
+  { left: "-7%", bottom: "-3%", height: "30vh", tilt: 4, sway: 3.5, z: 10 },
+  { left: "20%", bottom: "-5%", height: "22vh", tilt: 14, sway: 3.8, z: 9 },
 
   // Right side - large foreground flowers (lowered to ground)
   { left: "94%", bottom: "-8%", height: "36vh", tilt: -10, sway: 3.4, z: 10 },
@@ -574,6 +583,15 @@ const foregroundFlowers = [
   { left: "97%", bottom: "4%", height: "17vh", tilt: -6, sway: 4.4, z: 7 },
   { left: "80%", bottom: "-3%", height: "27vh", tilt: -12, sway: 3.6, z: 9 },
   { left: "87%", bottom: "3%", height: "18vh", tilt: -9, sway: 4.5, z: 7 },
+  { left: "106%", bottom: "-9%", height: "38vh", tilt: -3, sway: 3.1, z: 10 },
+  { left: "89%", bottom: "-10%", height: "35vh", tilt: -16, sway: 3.3, z: 10 },
+  { left: "78%", bottom: "-5%", height: "25vh", tilt: -11, sway: 3.7, z: 9 },
+  { left: "101%", bottom: "1%", height: "21vh", tilt: -7, sway: 4.2, z: 8 },
+  { left: "85%", bottom: "-8%", height: "32vh", tilt: -14, sway: 3.4, z: 10 },
+  { left: "95%", bottom: "-10%", height: "37vh", tilt: -6, sway: 3.2, z: 10 },
+  { left: "83%", bottom: "0%", height: "19vh", tilt: -10, sway: 4.1, z: 8 },
+  { left: "76%", bottom: "-4%", height: "24vh", tilt: -13, sway: 3.8, z: 9 },
+  { left: "99%", bottom: "-6%", height: "29vh", tilt: -5, sway: 3.5, z: 10 },
 ];
 
 function ForegroundSunflowers() {
@@ -1411,8 +1429,7 @@ export default function Scene() {
         <DistantHills />
         <AtmosphericHaze />
         <MainHill />
-        {/* Sunflowers baked into hill asset, animated ones in foreground */}
-        {/* <BackSunflowers /> */}
+        <BackSunflowers />
         {/* Sluglord is now integrated into MainHill asset */}
         {/* <Sluglord /> */}
         <ForegroundSunflowers />
