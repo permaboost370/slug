@@ -65,20 +65,41 @@ function SunriseSky() {
 
       {/* Golden hour clouds overlay (screen blend makes black bg transparent) */}
       {config.assets.clouds && (
-        <div className="absolute inset-0 z-[2] pointer-events-none">
-          <img
-            src={config.assets.clouds}
-            alt=""
-            className="w-full h-full object-cover"
-            style={{
-              mixBlendMode: "screen",
-              opacity: 0.85,
-              animation: "sky-drift 70s ease-in-out infinite",
-              scale: "1.08",
-            }}
-            draggable={false}
-          />
-        </div>
+        <>
+          {/* Primary clouds — upper sky */}
+          <div className="absolute z-[2] pointer-events-none" style={{ top: "-15%", left: "-10%", right: "-10%", bottom: "-40%" }}>
+            <img
+              src={config.assets.clouds}
+              alt=""
+              className="w-full h-full object-cover"
+              style={{
+                mixBlendMode: "screen",
+                opacity: 0.9,
+                objectPosition: "center 85%",
+                animation: "sky-drift 70s ease-in-out infinite",
+                scale: "1.25",
+              }}
+              draggable={false}
+            />
+          </div>
+          {/* Secondary clouds — fills mid-sky gap, flipped & offset */}
+          <div className="absolute z-[2] pointer-events-none" style={{ top: "15%", left: "-10%", right: "-10%", bottom: "-60%" }}>
+            <img
+              src={config.assets.clouds}
+              alt=""
+              className="w-full h-full object-cover"
+              style={{
+                mixBlendMode: "screen",
+                opacity: 0.55,
+                objectPosition: "center 90%",
+                transform: "scaleX(-1)",
+                animation: "sky-drift 90s ease-in-out infinite reverse",
+                scale: "1.3",
+              }}
+              draggable={false}
+            />
+          </div>
+        </>
       )}
 
       {/* Drifting cloud shapes (only when no sky or cloud image) */}
