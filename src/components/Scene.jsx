@@ -1429,7 +1429,7 @@ export default function Scene() {
         <DistantHills />
         <AtmosphericHaze />
         <MainHill />
-        <BackSunflowers />
+        {/* <BackSunflowers /> */}
         {/* Sluglord is now integrated into MainHill asset */}
         {/* <Sluglord /> */}
         <ForegroundSunflowers />
