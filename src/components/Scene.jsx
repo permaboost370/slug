@@ -168,6 +168,48 @@ function DistantHills() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   LAYER 3.5 — ATMOSPHERIC HAZE (mid-sky depth between hills)
+   ═══════════════════════════════════════════════════════════════════ */
+function AtmosphericHaze() {
+  return (
+    <div className="absolute inset-0 z-[3] pointer-events-none max-sm:opacity-50">
+      {/* Layer A — warm horizon haze */}
+      <div
+        className="absolute left-0 right-0"
+        style={{
+          bottom: "18%",
+          height: "35%",
+          background: "linear-gradient(to top, rgba(232,184,74,0.12), rgba(232,184,74,0.04) 40%, transparent)",
+          animation: "haze-drift 24s ease-in-out infinite",
+        }}
+      />
+      {/* Layer B — cool mid-atmosphere band */}
+      <div
+        className="absolute left-0 right-0"
+        style={{
+          bottom: "30%",
+          height: "25%",
+          background: "linear-gradient(to top, rgba(107,143,191,0.08), rgba(107,143,191,0.03) 50%, transparent)",
+          animation: "haze-drift 28s ease-in-out infinite",
+          animationDelay: "-6s",
+        }}
+      />
+      {/* Layer C — warm glow near hill line */}
+      <div
+        className="absolute left-0 right-0"
+        style={{
+          bottom: "15%",
+          height: "30%",
+          background: "radial-gradient(ellipse at 30% 80%, rgba(232,184,74,0.1) 0%, transparent 60%)",
+          animation: "haze-drift 20s ease-in-out infinite",
+          animationDelay: "-10s",
+        }}
+      />
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    LAYER 4 — MAIN HILLSIDE (with integrated character + blink effect)
    ═══════════════════════════════════════════════════════════════════ */
 function MainHill() {
@@ -691,6 +733,20 @@ function ForegroundGrass() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   LAYER 11 — CINEMATIC VIGNETTE (above scene, below UI)
+   ═══════════════════════════════════════════════════════════════════ */
+function CinematicVignette() {
+  return (
+    <div
+      className="absolute inset-0 z-[11] pointer-events-none"
+      style={{
+        background: "radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(0,0,0,0.5) 100%)",
+      }}
+    />
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    UI — TOKEN NAME + TICKER
    ═══════════════════════════════════════════════════════════════════ */
 function TokenTitle() {
@@ -740,7 +796,7 @@ function SignButton({ label, onClick, className = "" }) {
   if (config.assets.woodenSign) {
     return (
       <div
-        className={`relative cursor-pointer hover:scale-105 transition-transform ${className}`}
+        className={`relative cursor-pointer sign-hover ${className}`}
         onClick={onClick}
       >
         <img src={config.assets.woodenSign} alt="" className="w-24 sm:w-36 md:w-44" draggable={false} />
@@ -755,7 +811,7 @@ function SignButton({ label, onClick, className = "" }) {
   }
   return (
     <div
-      className={`relative cursor-pointer hover:scale-105 transition-transform rounded-md px-4 py-2 shadow-lg border-2 border-dashed ${className}`}
+      className={`relative cursor-pointer sign-hover rounded-md px-4 py-2 shadow-lg border-2 border-dashed ${className}`}
       style={{ backgroundColor: "rgba(107,83,68,0.88)", borderColor: "rgba(107,83,68,0.5)" }}
       onClick={onClick}
     >
@@ -802,7 +858,7 @@ function SignStack({ onOpenModal }) {
         )}
         {config.assets.woodenSign ? (
           <div
-            className="relative cursor-pointer hover:scale-105 transition-transform"
+            className="relative cursor-pointer sign-hover"
             onClick={copy}
             title="Click to copy contract address"
           >
@@ -816,7 +872,7 @@ function SignStack({ onOpenModal }) {
           </div>
         ) : (
           <div
-            className="relative cursor-pointer hover:scale-105 transition-transform rounded-md px-3 py-2 shadow-lg border-2 border-dashed"
+            className="relative cursor-pointer sign-hover rounded-md px-3 py-2 shadow-lg border-2 border-dashed"
             style={{ backgroundColor: "rgba(107,83,68,0.88)", borderColor: "rgba(107,83,68,0.5)" }}
             onClick={copy}
             title="Click to copy contract address"
@@ -1372,6 +1428,7 @@ export default function Scene() {
         <SunriseSky />
         <SunGlow />
         <DistantHills />
+        <AtmosphericHaze />
         <MainHill />
         {/* Sunflowers baked into hill asset, animated ones in foreground */}
         {/* <BackSunflowers /> */}
@@ -1381,6 +1438,7 @@ export default function Scene() {
         <Pollen />
         <GodRays />
         <ForegroundGrass />
+        <CinematicVignette />
 
         {/* UI overlay */}
         <TokenTitle />
