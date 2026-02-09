@@ -705,7 +705,7 @@ function TokenTitle() {
             alt={config.tokenName}
             className="relative w-[55vw] sm:w-[48vw] md:w-[38vw] max-w-lg"
             style={{
-              filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.5)) drop-shadow(0 0 30px rgba(255,200,80,0.2)) drop-shadow(1px 0 0 rgba(0,0,0,0.8)) drop-shadow(-1px 0 0 rgba(0,0,0,0.8)) drop-shadow(0 1px 0 rgba(0,0,0,0.8)) drop-shadow(0 -1px 0 rgba(0,0,0,0.8))",
+              filter: "drop-shadow(1px 0 0 rgba(0,0,0,0.8)) drop-shadow(-1px 0 0 rgba(0,0,0,0.8)) drop-shadow(0 1px 0 rgba(0,0,0,0.8)) drop-shadow(0 -1px 0 rgba(0,0,0,0.8))",
             }}
             draggable={false}
           />
