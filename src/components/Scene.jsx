@@ -168,48 +168,6 @@ function DistantHills() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   LAYER 3.5 — ATMOSPHERIC HAZE (mid-sky depth between hills)
-   ═══════════════════════════════════════════════════════════════════ */
-function AtmosphericHaze() {
-  return (
-    <div className="absolute inset-0 z-[3] pointer-events-none max-sm:opacity-50">
-      {/* Layer A — warm horizon haze */}
-      <div
-        className="absolute left-0 right-0"
-        style={{
-          bottom: "18%",
-          height: "35%",
-          background: "linear-gradient(to top, rgba(232,184,74,0.12), rgba(232,184,74,0.04) 40%, transparent)",
-          animation: "haze-drift 24s ease-in-out infinite",
-        }}
-      />
-      {/* Layer B — cool mid-atmosphere band */}
-      <div
-        className="absolute left-0 right-0"
-        style={{
-          bottom: "30%",
-          height: "25%",
-          background: "linear-gradient(to top, rgba(107,143,191,0.08), rgba(107,143,191,0.03) 50%, transparent)",
-          animation: "haze-drift 28s ease-in-out infinite",
-          animationDelay: "-6s",
-        }}
-      />
-      {/* Layer C — warm glow near hill line */}
-      <div
-        className="absolute left-0 right-0"
-        style={{
-          bottom: "15%",
-          height: "30%",
-          background: "radial-gradient(ellipse at 30% 80%, rgba(232,184,74,0.1) 0%, transparent 60%)",
-          animation: "haze-drift 20s ease-in-out infinite",
-          animationDelay: "-10s",
-        }}
-      />
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
    LAYER 4 — MAIN HILLSIDE (with integrated character + blink effect)
    ═══════════════════════════════════════════════════════════════════ */
 function MainHill() {
@@ -733,20 +691,6 @@ function ForegroundGrass() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   LAYER 11 — CINEMATIC VIGNETTE (above scene, below UI)
-   ═══════════════════════════════════════════════════════════════════ */
-function CinematicVignette() {
-  return (
-    <div
-      className="absolute inset-0 z-[11] pointer-events-none"
-      style={{
-        background: "radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(0,0,0,0.5) 100%)",
-      }}
-    />
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
    UI — TOKEN NAME + TICKER
    ═══════════════════════════════════════════════════════════════════ */
 function TokenTitle() {
@@ -796,7 +740,7 @@ function SignButton({ label, onClick, className = "" }) {
   if (config.assets.woodenSign) {
     return (
       <div
-        className={`relative cursor-pointer sign-hover ${className}`}
+        className={`relative cursor-pointer hover:scale-105 transition-transform ${className}`}
         onClick={onClick}
       >
         <img src={config.assets.woodenSign} alt="" className="w-24 sm:w-36 md:w-44" draggable={false} />
@@ -811,7 +755,7 @@ function SignButton({ label, onClick, className = "" }) {
   }
   return (
     <div
-      className={`relative cursor-pointer sign-hover rounded-md px-4 py-2 shadow-lg border-2 border-dashed ${className}`}
+      className={`relative cursor-pointer hover:scale-105 transition-transform rounded-md px-4 py-2 shadow-lg border-2 border-dashed ${className}`}
       style={{ backgroundColor: "rgba(107,83,68,0.88)", borderColor: "rgba(107,83,68,0.5)" }}
       onClick={onClick}
     >
@@ -822,14 +766,28 @@ function SignButton({ label, onClick, className = "" }) {
   );
 }
 
-function SignStack({ onOpenModal, copy, toast }) {
+function SignStack({ onOpenModal }) {
+  const [toast, setToast] = useState(false);
+
+  const copy = useCallback(() => {
+    navigator.clipboard.writeText(config.contractAddress).then(() => {
+      setToast(true);
+      setTimeout(() => setToast(false), 1800);
+    });
+  }, []);
+
+  const shortAddr =
+    config.contractAddress.length > 16
+      ? config.contractAddress.slice(0, 6) + "..." + config.contractAddress.slice(-4)
+      : config.contractAddress;
+
   return (
     <div className="absolute z-[12] top-[52px] right-4 sm:top-6 sm:right-6 flex flex-col items-center gap-1">
       <SignButton label={"\uD835\uDCDB\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE"} onClick={() => onOpenModal("lore")} />
       <SignButton label={"\uD835\uDCD5\uD835\uDCFB\uD835\uDCF8\uD835\uDCF8\uD835\uDCEF"} onClick={() => onOpenModal("proof")} />
 
-      {/* Contract address sign — hidden on mobile (shown in MobileBottomBar) */}
-      <div className="relative hidden sm:block">
+      {/* Contract address sign */}
+      <div className="relative">
         {toast && (
           <div
             className="absolute -top-7 left-1/2 -translate-x-1/2 px-3 py-1 rounded text-xs font-semibold whitespace-nowrap shadow-lg z-10"
@@ -844,7 +802,7 @@ function SignStack({ onOpenModal, copy, toast }) {
         )}
         {config.assets.woodenSign ? (
           <div
-            className="relative cursor-pointer sign-hover"
+            className="relative cursor-pointer hover:scale-105 transition-transform"
             onClick={copy}
             title="Click to copy contract address"
           >
@@ -858,7 +816,7 @@ function SignStack({ onOpenModal, copy, toast }) {
           </div>
         ) : (
           <div
-            className="relative cursor-pointer sign-hover rounded-md px-3 py-2 shadow-lg border-2 border-dashed"
+            className="relative cursor-pointer hover:scale-105 transition-transform rounded-md px-3 py-2 shadow-lg border-2 border-dashed"
             style={{ backgroundColor: "rgba(107,83,68,0.88)", borderColor: "rgba(107,83,68,0.5)" }}
             onClick={copy}
             title="Click to copy contract address"
@@ -890,7 +848,8 @@ function SocialLinks() {
     <div className="absolute z-[12]
                     bottom-[12%] left-4
                     sm:bottom-[6%] sm:left-6
-                    hidden sm:flex flex-col items-center gap-3">
+                    max-sm:top-[52px] max-sm:left-3 max-sm:bottom-auto
+                    flex flex-col items-center gap-1 sm:gap-3">
       {links.map((l) => (
         <a
           key={l.key}
@@ -1401,91 +1360,10 @@ function ProofGallery({ onClose }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   UI — MOBILE BOTTOM ACTION BAR (sm:hidden)
-   ═══════════════════════════════════════════════════════════════════ */
-function MobileBottomBar({ copy, toast }) {
-  const links = [
-    { key: "x",        url: config.socials.x,           assetKey: "iconX",        label: "X",   icon: "\uD835\uDD4F" },
-    { key: "telegram", url: config.socials.telegram,     assetKey: "iconTelegram", label: "TG",  icon: "\u2708" },
-    { key: "dex",      url: config.socials.dexscreener,  assetKey: "iconDex",      label: "DEX", icon: "\uD83D\uDCCA" },
-  ];
-
-  return (
-    <div
-      className="fixed bottom-0 left-0 right-0 z-[12] sm:hidden"
-      style={{
-        backgroundColor: "rgba(20,15,10,0.75)",
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
-      }}
-    >
-      {/* Toast notification */}
-      {toast && (
-        <div
-          className="absolute -top-9 left-1/2 -translate-x-1/2 px-3 py-1 rounded text-xs font-semibold whitespace-nowrap shadow-lg"
-          style={{
-            backgroundColor: "#5A7A32",
-            color: "#FFFEF5",
-            animation: "toast-in 1.8s ease forwards",
-          }}
-        >
-          Copied!
-        </div>
-      )}
-
-      <div className="flex items-center justify-center gap-4 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-        {/* Copy CA button */}
-        <button
-          onClick={copy}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold cursor-pointer active:scale-95 transition-transform"
-          style={{
-            backgroundColor: "rgba(232,184,74,0.25)",
-            color: "#FFFEF5",
-            fontFamily: "'Baloo 2', sans-serif",
-            border: "1px solid rgba(232,184,74,0.35)",
-          }}
-        >
-          Copy CA
-        </button>
-
-        {/* Divider */}
-        <div className="w-px h-6" style={{ backgroundColor: "rgba(255,255,255,0.15)" }} />
-
-        {/* Social icons */}
-        {links.map((l) => (
-          <a
-            key={l.key}
-            href={l.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 flex items-center justify-center active:scale-95 transition-transform"
-            title={l.label}
-          >
-            {config.assets[l.assetKey] ? (
-              <img src={config.assets[l.assetKey]} alt={l.label} className="w-full h-full object-contain drop-shadow-md" draggable={false} />
-            ) : (
-              <span className="text-lg" style={{ color: "#FFFEF5" }}>{l.icon}</span>
-            )}
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
    SCENE — Main composition (The Hilltop Moment)
    ═══════════════════════════════════════════════════════════════════ */
 export default function Scene() {
   const [modalOpen, setModalOpen] = useState(null);
-  const [toast, setToast] = useState(false);
-
-  const copy = useCallback(() => {
-    navigator.clipboard.writeText(config.contractAddress).then(() => {
-      setToast(true);
-      setTimeout(() => setToast(false), 1800);
-    });
-  }, []);
 
   return (
     <>
@@ -1494,7 +1372,6 @@ export default function Scene() {
         <SunriseSky />
         <SunGlow />
         <DistantHills />
-        <AtmosphericHaze />
         <MainHill />
         {/* Sunflowers baked into hill asset, animated ones in foreground */}
         {/* <BackSunflowers /> */}
@@ -1504,16 +1381,12 @@ export default function Scene() {
         <Pollen />
         <GodRays />
         <ForegroundGrass />
-        <CinematicVignette />
 
         {/* UI overlay */}
         <TokenTitle />
-        <SignStack onOpenModal={setModalOpen} copy={copy} toast={toast} />
+        <SignStack onOpenModal={setModalOpen} />
         <SocialLinks />
       </div>
-
-      {/* Mobile bottom bar — outside overflow-hidden wrapper */}
-      <MobileBottomBar copy={copy} toast={toast} />
 
       {/* Modals */}
       {modalOpen === "lore" && <LoreModal onClose={() => setModalOpen(null)} />}
