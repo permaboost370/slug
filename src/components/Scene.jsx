@@ -688,14 +688,31 @@ function ForegroundGrass() {
    ═══════════════════════════════════════════════════════════════════ */
 function TokenTitle() {
   return (
-    <div className="absolute z-[10] top-2 sm:top-6 left-1/2 -translate-x-1/2 text-center select-none">
+    <div
+      className="absolute z-[10] top-2 sm:top-6 left-1/2 -translate-x-1/2 text-center select-none"
+      style={{ animation: "title-float 6s ease-in-out infinite" }}
+    >
       {config.assets.titleLogo ? (
-        <img
-          src={config.assets.titleLogo}
-          alt={config.tokenName}
-          className="w-[50vw] sm:w-[45vw] md:w-[35vw] max-w-md"
-          draggable={false}
-        />
+        <div className="relative">
+          {/* Warm glow halo behind title */}
+          <div
+            className="absolute -inset-[40%] pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse at center, rgba(255,210,80,0.35) 0%, rgba(255,180,60,0.15) 40%, transparent 70%)",
+              animation: "title-glow 8s ease-in-out infinite",
+              filter: "blur(20px)",
+            }}
+          />
+          <img
+            src={config.assets.titleLogo}
+            alt={config.tokenName}
+            className="relative w-[55vw] sm:w-[48vw] md:w-[38vw] max-w-lg"
+            style={{
+              filter: "drop-shadow(0 4px 12px rgba(80,50,20,0.4)) drop-shadow(0 0 30px rgba(255,200,80,0.2))",
+            }}
+            draggable={false}
+          />
+        </div>
       ) : (
         <h1
           className="text-[10vw] sm:text-[8vw] md:text-[6vw] font-extrabold leading-none tracking-wide"

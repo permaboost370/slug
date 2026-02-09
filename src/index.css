@@ -135,6 +135,18 @@ body {
   100%     { opacity: 1; transform: translateY(0); }
 }
 
+/* ── Title float — gentle up/down drift ── */
+@keyframes title-float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-6px); }
+}
+
+/* ── Title glow — warm halo breathing behind logo ── */
+@keyframes title-glow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50%      { transform: scale(1.1); opacity: 0.8; }
+}
+
 /* ── Modal fade-in ── */
 @keyframes modal-fade {
   0%   { opacity: 0; transform: scale(0.97); }
