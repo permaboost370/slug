@@ -27,8 +27,8 @@ const config = {
       { url: "/assets/proof/photo_2026-02-05_23-39-32.jpg" },
       { url: "/assets/proof/photo_2026-02-05_23-39-34.jpg" },
       { url: "/assets/proof/photo_2026-02-07_19-47-04.jpg" },
-      { url: "/assets/proof/photo_2026-02-09_17-00-33.jpg" },
-      { url: "/assets/proof/IMG_1818.MP4", type: "video", poster: "/assets/proof/IMG_1818-poster.jpg" },
+      { url: "/assets/proof/photo_2026-02-09_17-00-33.jpg", featured: true },
+      { url: "/assets/proof/IMG_1818.MP4", type: "video", poster: "/assets/proof/IMG_1818-poster.jpg", featured: true },
     ],
   },
 

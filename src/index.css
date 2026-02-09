@@ -137,8 +137,8 @@ body {
 
 /* ── Title float — gentle up/down drift ── */
 @keyframes title-float {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(-6px); }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
 }
 
 /* ── Title glow — warm halo breathing behind logo ── */

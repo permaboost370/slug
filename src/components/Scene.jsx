@@ -688,12 +688,9 @@ function ForegroundGrass() {
    ═══════════════════════════════════════════════════════════════════ */
 function TokenTitle() {
   return (
-    <div
-      className="absolute z-[10] top-2 sm:top-6 left-1/2 -translate-x-1/2 text-center select-none"
-      style={{ animation: "title-float 6s ease-in-out infinite" }}
-    >
+    <div className="absolute z-[10] top-2 sm:top-6 left-1/2 -translate-x-1/2 text-center select-none">
       {config.assets.titleLogo ? (
-        <div className="relative">
+        <div className="relative" style={{ animation: "title-float 6s ease-in-out infinite" }}>
           {/* Warm glow halo behind title */}
           <div
             className="absolute -inset-[40%] pointer-events-none"
@@ -708,7 +705,7 @@ function TokenTitle() {
             alt={config.tokenName}
             className="relative w-[55vw] sm:w-[48vw] md:w-[38vw] max-w-lg"
             style={{
-              filter: "drop-shadow(0 4px 12px rgba(80,50,20,0.4)) drop-shadow(0 0 30px rgba(255,200,80,0.2))",
+              filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.5)) drop-shadow(0 0 30px rgba(255,200,80,0.2)) drop-shadow(1px 0 0 rgba(0,0,0,0.8)) drop-shadow(-1px 0 0 rgba(0,0,0,0.8)) drop-shadow(0 1px 0 rgba(0,0,0,0.8)) drop-shadow(0 -1px 0 rgba(0,0,0,0.8))",
             }}
             draggable={false}
           />
@@ -1148,125 +1145,210 @@ function MemeGallery({ onClose }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   PROOF GALLERY — Image gallery for proof/evidence
+   PROOF LIGHTBOX — Fullscreen viewer with arrow navigation
    ═══════════════════════════════════════════════════════════════════ */
-/** Video player that crops dark/empty areas to focus on visible content */
-function ProofVideo({ src, poster }) {
-  const [ratio, setRatio] = useState(9 / 12);
+function ProofLightbox({ items, startIndex, onClose }) {
+  const [index, setIndex] = useState(startIndex);
+  const item = items[index];
 
-  const handleMetadata = useCallback((e) => {
-    const v = e.target;
-    if (v.videoWidth && v.videoHeight) {
-      const nativeRatio = v.videoWidth / v.videoHeight;
-      // Crop to ~55% of original height to remove dark ceiling/floor
-      setRatio(nativeRatio / 0.55);
-    }
-  }, []);
+  const prev = useCallback(() => setIndex(i => (i - 1 + items.length) % items.length), [items.length]);
+  const next = useCallback(() => setIndex(i => (i + 1) % items.length), [items.length]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") prev();
+      else if (e.key === "ArrowRight") next();
+      else if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [prev, next, onClose]);
 
   return (
-    <div className="mb-6 flex justify-center w-full">
-      <div
-        className="rounded-xl overflow-hidden"
-        style={{
-          maxHeight: "min(45vh, 340px)",
-          maxWidth: "min(55vw, 260px)",
-          width: "fit-content",
-          aspectRatio: ratio,
-          border: "2px solid rgba(139,115,85,0.2)",
-          boxShadow: "0 2px 8px rgba(80,50,30,0.15)",
-        }}
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center"
+      style={{ backgroundColor: "rgba(0,0,0,0.9)", animation: "modal-fade 0.25s ease-out" }}
+      onClick={onClose}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full text-white text-xl cursor-pointer"
+        style={{ backgroundColor: "rgba(255,255,255,0.15)" }}
       >
-        <video
-          src={src}
-          poster={poster}
-          className="block w-full h-full"
-          style={{
-            objectFit: "cover",
-            objectPosition: "center 58%",
-          }}
-          controls
-          playsInline
-          preload="metadata"
-          onLoadedMetadata={handleMetadata}
-        />
+        &#x2715;
+      </button>
+
+      {/* Counter */}
+      <div
+        className="absolute top-4 left-1/2 -translate-x-1/2 text-white/60 text-sm font-mono"
+      >
+        {index + 1} / {items.length}
+      </div>
+
+      {/* Left arrow */}
+      <button
+        onClick={(e) => { e.stopPropagation(); prev(); }}
+        className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-10 w-11 h-11 sm:w-14 sm:h-14 flex items-center justify-center rounded-full text-white text-2xl cursor-pointer transition-colors"
+        style={{ backgroundColor: "rgba(255,255,255,0.12)" }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.25)"}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.12)"}
+      >
+        &#x2039;
+      </button>
+
+      {/* Right arrow */}
+      <button
+        onClick={(e) => { e.stopPropagation(); next(); }}
+        className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-10 w-11 h-11 sm:w-14 sm:h-14 flex items-center justify-center rounded-full text-white text-2xl cursor-pointer transition-colors"
+        style={{ backgroundColor: "rgba(255,255,255,0.12)" }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.25)"}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.12)"}
+      >
+        &#x203A;
+      </button>
+
+      {/* Content */}
+      <div
+        className="max-w-[90vw] max-h-[85vh] flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {item.type === "video" ? (
+          <video
+            key={item.url}
+            src={item.url}
+            poster={item.poster}
+            className="max-w-full max-h-[85vh] rounded-lg"
+            style={{ objectFit: "contain" }}
+            controls
+            autoPlay
+            playsInline
+          />
+        ) : (
+          <img
+            src={item.url}
+            alt=""
+            className="max-w-full max-h-[85vh] rounded-lg"
+            style={{ objectFit: "contain" }}
+            draggable={false}
+          />
+        )}
       </div>
     </div>
   );
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   PROOF GALLERY — Image gallery for proof/evidence
+   ═══════════════════════════════════════════════════════════════════ */
 function ProofGallery({ onClose }) {
+  const [lightboxIndex, setLightboxIndex] = useState(null);
   const proofs = config.content?.proof || [];
-  const videos = proofs.filter(p => p.type === "video");
-  const images = proofs.filter(p => p.type !== "video");
-  const imageSlots = images.length > 0 ? images : Array.from({ length: 6 }, (_, i) => ({ placeholder: true, index: i + 1 }));
+  const featured = proofs.filter(p => p.featured);
+  const grid = proofs.filter(p => !p.featured);
+
+  // All items in order for lightbox navigation: featured first, then grid
+  const allItems = [...featured, ...grid];
+
+  const openLightbox = (item) => {
+    const idx = allItems.findIndex(a => a.url === item.url);
+    setLightboxIndex(idx >= 0 ? idx : 0);
+  };
 
   return (
-    <ModalOverlay onClose={onClose}>
-      {/* Title */}
-      <h2
-        className="w-full text-xl sm:text-2xl font-bold text-center mb-1"
-        style={{ fontFamily: "'Baloo 2', sans-serif", color: "#5A3E2B" }}
-      >
-        Proof
-      </h2>
-      <p className="w-full text-center text-xs sm:text-sm mb-6" style={{ color: "#8B7355", fontFamily: "'Baloo 2', sans-serif" }}>
-        Receipts from the Sluglord
-      </p>
+    <>
+      <ModalOverlay onClose={onClose}>
+        {/* Title */}
+        <h2
+          className="w-full text-xl sm:text-2xl font-bold text-center mb-1"
+          style={{ fontFamily: "'Baloo 2', sans-serif", color: "#5A3E2B" }}
+        >
+          Proof
+        </h2>
+        <p className="w-full text-center text-xs sm:text-sm mb-6" style={{ color: "#8B7355", fontFamily: "'Baloo 2', sans-serif" }}>
+          Receipts from the Sluglord
+        </p>
 
-      {/* Divider */}
-      <div className="w-full flex items-center justify-center gap-3 mb-6">
-        <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
-        {config.assets.sunflower ? (
-          <img src={config.assets.sunflower} alt="" className="w-7 h-7 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
-        ) : (
-          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#8B7355" }} />
-        )}
-        <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to left, transparent, #8B7355)" }} />
-      </div>
+        {/* Divider */}
+        <div className="w-full flex items-center justify-center gap-3 mb-6">
+          <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
+          {config.assets.sunflower ? (
+            <img src={config.assets.sunflower} alt="" className="w-7 h-7 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
+          ) : (
+            <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#8B7355" }} />
+          )}
+          <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to left, transparent, #8B7355)" }} />
+        </div>
 
-      {/* Video on top, centered */}
-      {videos.map((v, i) => (
-        <ProofVideo key={`video-${i}`} src={v.url} poster={v.poster} />
-      ))}
-
-      {/* Image grid */}
-      <div className="w-full max-w-xl grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-        {imageSlots.map((item, i) => (
-          <div
-            key={i}
-            className="aspect-square rounded-xl flex items-center justify-center overflow-hidden transition-transform hover:scale-[1.03]"
-            style={{
-              border: item.placeholder ? "2px dashed rgba(139,115,85,0.25)" : "2px solid rgba(139,115,85,0.2)",
-              backgroundColor: item.placeholder ? "rgba(139,115,85,0.06)" : "transparent",
-              boxShadow: item.placeholder ? "none" : "0 2px 8px rgba(80,50,30,0.15)",
-            }}
-          >
-            {item.placeholder ? (
-              <div className="flex flex-col items-center gap-2">
-                {config.assets.sunflower && (
-                  <img
-                    src={config.assets.sunflower}
-                    alt=""
-                    className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
-                    style={{ opacity: 0.2 }}
-                    draggable={false}
-                  />
+        {/* Featured row — video + key image side by side */}
+        {featured.length > 0 && (
+          <div className="w-full max-w-xl flex justify-center gap-3 sm:gap-4 mb-6">
+            {featured.map((item, i) => (
+              <div
+                key={`featured-${i}`}
+                className="flex-1 max-w-[48%] rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-[1.03]"
+                style={{
+                  border: "2px solid rgba(139,115,85,0.2)",
+                  boxShadow: "0 2px 8px rgba(80,50,30,0.15)",
+                  aspectRatio: "1",
+                }}
+                onClick={() => openLightbox(item)}
+              >
+                {item.type === "video" ? (
+                  <div className="relative w-full h-full group">
+                    <img
+                      src={item.poster || ""}
+                      alt=""
+                      className="w-full h-full object-cover"
+                      style={{ objectPosition: "center 58%" }}
+                      draggable={false}
+                    />
+                    {/* Play icon overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div
+                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"
+                        style={{ backgroundColor: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
+                      >
+                        <span className="text-white text-2xl ml-1">&#x25B6;</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <img src={item.url} alt="" className="w-full h-full object-cover" draggable={false} />
                 )}
-                <span
-                  className="text-[10px] sm:text-xs tracking-wider font-medium"
-                  style={{ color: "rgba(139,115,85,0.4)", fontFamily: "'Baloo 2', sans-serif" }}
-                >
-                  PROOF {item.index}
-                </span>
               </div>
-            ) : (
-              <img src={item.url} alt={item.alt || `Proof ${i + 1}`} className="w-full h-full object-cover" draggable={false} />
-            )}
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="h-4" />
-    </ModalOverlay>
+        )}
+
+        {/* Image grid */}
+        <div className="w-full max-w-xl grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          {grid.map((item, i) => (
+            <div
+              key={i}
+              className="aspect-square rounded-xl flex items-center justify-center overflow-hidden cursor-pointer transition-transform hover:scale-[1.03]"
+              style={{
+                border: "2px solid rgba(139,115,85,0.2)",
+                boxShadow: "0 2px 8px rgba(80,50,30,0.15)",
+              }}
+              onClick={() => openLightbox(item)}
+            >
+              <img src={item.url} alt={item.alt || `Proof ${i + 1}`} className="w-full h-full object-cover" draggable={false} />
+            </div>
+          ))}
+        </div>
+        <div className="h-4" />
+      </ModalOverlay>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <ProofLightbox
+          items={allItems}
+          startIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
+      )}
+    </>
   );
 }
 
