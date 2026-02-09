@@ -348,9 +348,15 @@ function generateSunflowerField() {
 
 const sunflowerField = generateSunflowerField();
 
+function scaleHeight(h, factor) {
+  const match = h.match(/([\d.]+)(vh)/);
+  return match ? `${(parseFloat(match[1]) * factor).toFixed(1)}vh` : h;
+}
+
 function SunflowerLayer({ flowers, keyPrefix, placeholderLabel }) {
   const size = useScreenSize();
   const step = size === "mobile" ? 4 : size === "tablet" ? 2 : 1;
+  const heightScale = size === "mobile" ? 0.6 : size === "tablet" ? 0.8 : 1;
   const filtered = step === 1 ? flowers : flowers.filter((_, i) => i % step === 0);
 
   if (!config.assets.sunflower) {
@@ -370,7 +376,7 @@ function SunflowerLayer({ flowers, keyPrefix, placeholderLabel }) {
           style={{
             left: s.left,
             bottom: s.bottom,
-            height: s.height,
+            height: scaleHeight(s.height, heightScale),
             zIndex: s.z,
             transform: `rotate(${s.tilt}deg)`,
             transformOrigin: "bottom center",
@@ -533,6 +539,7 @@ function ForegroundSunflowers() {
   if (!config.assets.sunflower) return null;
 
   const step = size === "mobile" ? 3 : size === "tablet" ? 2 : 1;
+  const heightScale = size === "mobile" ? 0.55 : size === "tablet" ? 0.8 : 1;
   const filtered = step === 1 ? foregroundFlowers : foregroundFlowers.filter((_, i) => i % step === 0);
 
   return (
@@ -544,7 +551,7 @@ function ForegroundSunflowers() {
           style={{
             left: s.left,
             bottom: s.bottom,
-            height: s.height,
+            height: scaleHeight(s.height, heightScale),
             zIndex: s.z,
             transform: `rotate(${s.tilt}deg)`,
             transformOrigin: "bottom center",

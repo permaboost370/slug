@@ -9,8 +9,8 @@ const config = {
   ticker: "$SLUG",
 
   socials: {
-    x: "https://x.com/SlugLord_ERC",
-    telegram: "https://t.me/sluglordOG",
+    x: "https://x.com/sluglord_owner",
+    telegram: "https://t.me/SluglordOwner",
     dexscreener:
       "https://dexscreener.com/ethereum/0x5791254f5d7a4d7ce4dda0391ce15812b65ac2a2",
   },
