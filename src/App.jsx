@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Scene from "./components/Scene";
 
 const PAINTING_SRC = "/assets/proof/photo_2026-02-05_23-39-32.jpg";
 const SUNFLOWER_SRC = "/assets/sunflower.webp";
 const GOD_RAYS_SRC = "/assets/Sluglord  website Assets_god-rays copy.webp";
 const SUN_SRC = "/assets/Sun, Sky_Sun.webp";
-const PRELOADER_DURATION = 5500;
 const FADE_OUT_MS = 900;
 
 /* Decorative sunflowers flanking the painting */
@@ -37,14 +36,6 @@ const particles = Array.from({ length: 15 }, (_, i) => ({
 
 function Preloader({ onDone }) {
   const [exiting, setExiting] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setExiting(true);
-      setTimeout(onDone, FADE_OUT_MS);
-    }, PRELOADER_DURATION);
-    return () => clearTimeout(timer);
-  }, [onDone]);
 
   const dismiss = () => {
     if (exiting) return;
@@ -175,8 +166,8 @@ function Preloader({ onDone }) {
       </div>
 
       {/* Center content */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative flex flex-col items-center gap-4 sm:gap-6 px-6 max-w-lg">
+      <div className="absolute inset-0 flex items-center justify-center py-6 sm:py-8">
+        <div className="relative flex flex-col items-center gap-3 sm:gap-5 px-6 max-w-lg">
           {/* Painting with ornate golden frame */}
           <div
             className="relative"
@@ -197,7 +188,7 @@ function Preloader({ onDone }) {
             <div
               className="relative rounded-lg overflow-hidden"
               style={{
-                padding: "8px",
+                padding: "6px sm:8px",
                 background: "linear-gradient(145deg, #D4A017 0%, #8B6914 15%, #F5DEB3 30%, #D4A017 50%, #8B6914 70%, #F5DEB3 85%, #D4A017 100%)",
                 backgroundSize: "200% 200%",
                 animation: "preloader-shimmer 4s linear infinite",
@@ -216,7 +207,7 @@ function Preloader({ onDone }) {
                 <img
                   src={PAINTING_SRC}
                   alt="The original Sluglord painting by Matt Furie"
-                  className="w-[50vmin] sm:w-[38vmin] max-w-sm aspect-square object-cover rounded-[2px]"
+                  className="w-[38vmin] sm:w-[35vmin] md:w-[32vmin] max-w-xs aspect-square object-cover rounded-[2px]"
                   draggable={false}
                 />
               </div>
@@ -232,7 +223,7 @@ function Preloader({ onDone }) {
             }}
           >
             <h2
-              className="text-2xl sm:text-3xl font-bold tracking-wide"
+              className="text-xl sm:text-2xl md:text-3xl font-bold tracking-wide"
               style={{
                 fontFamily: "'Baloo 2', sans-serif",
                 color: "#5A3E2B",
@@ -245,27 +236,27 @@ function Preloader({ onDone }) {
 
           {/* Decorative divider */}
           <div
-            className="flex items-center gap-3 w-full max-w-[280px] -mt-1"
+            className="flex items-center gap-3 w-full max-w-[240px] sm:max-w-[280px]"
             style={{
               animation: "preloader-fade-in 1s ease-out both",
               animationDelay: "1.6s",
             }}
           >
             <div className="h-px flex-1" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
-            <img src={SUNFLOWER_SRC} alt="" className="w-6 h-6 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
+            <img src={SUNFLOWER_SRC} alt="" className="w-5 h-5 sm:w-6 sm:h-6 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
             <div className="h-px flex-1" style={{ background: "linear-gradient(to left, transparent, #8B7355)" }} />
           </div>
 
           {/* Artist credit */}
           <div
-            className="text-center -mt-1"
+            className="text-center"
             style={{
               animation: "preloader-fade-in 1s ease-out both",
               animationDelay: "2s",
             }}
           >
             <p
-              className="text-sm sm:text-base tracking-[0.15em] uppercase"
+              className="text-xs sm:text-sm md:text-base tracking-[0.15em] uppercase"
               style={{
                 fontFamily: "'Baloo 2', sans-serif",
                 color: "#8B7355",
@@ -284,7 +275,7 @@ function Preloader({ onDone }) {
             }}
           >
             <div
-              className="inline-block rounded-xl px-6 sm:px-8 py-3 sm:py-4"
+              className="inline-block rounded-xl px-5 sm:px-8 py-2.5 sm:py-4"
               style={{
                 backgroundColor: "rgba(139,115,85,0.12)",
                 border: "2px solid rgba(139,115,85,0.25)",
@@ -292,7 +283,7 @@ function Preloader({ onDone }) {
               }}
             >
               <p
-                className="text-lg sm:text-xl font-bold tracking-[0.12em] uppercase"
+                className="text-base sm:text-lg md:text-xl font-bold tracking-[0.12em] uppercase"
                 style={{
                   fontFamily: "'Baloo 2', sans-serif",
                   color: "#5A3E2B",
@@ -301,7 +292,7 @@ function Preloader({ onDone }) {
                 Owned by the Dev
               </p>
               <p
-                className="text-xs sm:text-sm mt-1 tracking-wide"
+                className="text-[10px] sm:text-xs md:text-sm mt-1 tracking-wide"
                 style={{
                   fontFamily: "'Baloo 2', sans-serif",
                   color: "#8B7355",
