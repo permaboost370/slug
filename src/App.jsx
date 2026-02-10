@@ -186,21 +186,22 @@ function Preloader({ onDone }) {
             />
             {/* Animated golden frame */}
             <div
-              className="relative rounded-lg overflow-hidden p-2 sm:p-2.5"
+              className="relative rounded-lg overflow-hidden"
               style={{
-                background: "linear-gradient(145deg, #D4A017 0%, #8B6914 15%, #F5DEB3 30%, #D4A017 50%, #8B6914 70%, #F5DEB3 85%, #D4A017 100%)",
-                backgroundSize: "200% 200%",
-                animation: "preloader-shimmer 4s linear infinite",
-                boxShadow: "0 12px 50px rgba(80,50,20,0.4), 0 0 80px rgba(212,160,23,0.12), inset 0 1px 0 rgba(255,255,255,0.3)",
+                padding: "10px",
+                background: "linear-gradient(90deg, #B8860B 0%, #D4A017 20%, #FCEABB 40%, #F5DEB3 50%, #FCEABB 60%, #D4A017 80%, #B8860B 100%)",
+                backgroundSize: "300% 100%",
+                animation: "preloader-shimmer 3s ease-in-out infinite alternate",
+                boxShadow: "0 12px 50px rgba(80,50,20,0.5), 0 0 60px rgba(212,160,23,0.2), inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(100,60,10,0.3)",
               }}
             >
               {/* Inner frame bevel */}
               <div
                 className="rounded-[4px] overflow-hidden"
                 style={{
-                  padding: "3px",
-                  background: "linear-gradient(to bottom, rgba(90,60,20,0.85), rgba(60,40,15,0.85))",
-                  boxShadow: "inset 0 1px 3px rgba(0,0,0,0.4), inset 0 -1px 2px rgba(212,160,23,0.15)",
+                  padding: "4px",
+                  background: "linear-gradient(to bottom, #6B4E1A, #4A3510)",
+                  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.5), inset 0 -1px 3px rgba(212,160,23,0.2)",
                 }}
               >
                 <img
