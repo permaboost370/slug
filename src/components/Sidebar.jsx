@@ -220,7 +220,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
       </div>
 
       {/* Sign menu — vertical stack */}
-      <div className="relative z-[1] flex flex-col items-center gap-3 sm:gap-3 mb-10 sm:mb-10">
+      <div className="relative z-[1] flex flex-col items-center gap-3 sm:gap-3 mb-12 sm:mb-10">
         <SignButton label={"\uD835\uDCDB\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE"} onClick={handleLore} />
         <SignButton label={"\uD835\uDCD5\uD835\uDCFB\uD835\uDCF8\uD835\uDCF8\uD835\uDCEF"} onClick={() => onOpenModal("proof")} />
         <div className="relative">
