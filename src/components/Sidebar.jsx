@@ -133,7 +133,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
 
       {/* ── Logo with glow halo + float + shimmer ── */}
       <div
-        className="relative mb-8 sm:mb-10"
+        className="relative mb-8 sm:mb-10 hidden sm:block"
         style={{ animation: "logo-float 6s ease-in-out infinite" }}
       >
         {config.assets.titleLogo ? (
@@ -209,7 +209,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
       </div>
 
       {/* Divider */}
-      <div className="relative z-[1] w-full flex items-center justify-center gap-3 mb-8 sm:mb-10">
+      <div className="relative z-[1] w-full hidden sm:flex items-center justify-center gap-3 mb-8 sm:mb-10">
         <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
         {config.assets.sunflower ? (
           <img src={config.assets.sunflower} alt="" className="w-6 h-6 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
