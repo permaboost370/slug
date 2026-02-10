@@ -24,7 +24,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
 
   return (
     <div
-      className="w-full h-full overflow-y-auto flex flex-col items-center justify-center px-5 py-8 sm:px-8 sm:py-10 sm:border-l-[3px]"
+      className="w-full h-full overflow-y-auto flex flex-col items-center justify-center px-5 py-5 sm:px-8 sm:py-10 sm:border-l-[3px]"
       style={{
         background: "linear-gradient(175deg, #F5E6C8 0%, #EDD9B5 25%, #E8CFA5 50%, #DFC494 75%, #D4B882 100%)",
         borderColor: "#8B7355",
@@ -100,7 +100,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
             alt=""
             className="absolute"
             style={{
-              bottom: "-6%", left: "-4%", height: "22vh",
+              bottom: "-6%", left: "-4%", height: "14vh",
               transform: "rotate(10deg)",
               opacity: 0.12, filter: "blur(1px) saturate(0.6)",
             }}
@@ -111,7 +111,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
             alt=""
             className="absolute"
             style={{
-              bottom: "-8%", right: "-3%", height: "18vh",
+              bottom: "-8%", right: "-3%", height: "12vh",
               transform: "rotate(-8deg) scaleX(-1)",
               opacity: 0.1, filter: "blur(1px) saturate(0.6)",
             }}
@@ -220,7 +220,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
       </div>
 
       {/* Sign menu — vertical stack */}
-      <div className="relative z-[1] flex flex-col items-center gap-2 sm:gap-3 mb-8 sm:mb-10">
+      <div className="relative z-[1] flex flex-col items-center gap-3 sm:gap-3 mb-6 sm:mb-10">
         <SignButton label={"\uD835\uDCDB\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE"} onClick={handleLore} />
         <SignButton label={"\uD835\uDCD5\uD835\uDCFB\uD835\uDCF8\uD835\uDCF8\uD835\uDCEF"} onClick={() => onOpenModal("proof")} />
         <div className="relative">
@@ -247,7 +247,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
             className="group"
             title={l.label}
           >
-            <div className="w-11 h-11 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform flex items-center justify-center">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform flex items-center justify-center">
               {config.assets[l.assetKey] ? (
                 <img src={config.assets[l.assetKey]} alt={l.label} className="w-full h-full object-contain drop-shadow-md" draggable={false} />
               ) : (

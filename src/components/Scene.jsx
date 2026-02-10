@@ -320,7 +320,7 @@ export default function Scene() {
     <>
       <div className="flex flex-col sm:flex-row w-full h-full">
         {/* Left panel — visual scene */}
-        <div className="w-full h-[40vh] sm:h-full sm:w-2/3 relative overflow-hidden">
+        <div className="w-full h-[50vh] sm:h-full sm:w-2/3 relative overflow-hidden">
           <ScenePanel />
         </div>
 
