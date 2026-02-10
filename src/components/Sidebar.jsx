@@ -79,7 +79,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
             alt={config.tokenName}
             className="w-[50vw] sm:w-[14vw] max-w-[220px]"
             style={{
-              filter: "drop-shadow(1px 0 0 rgba(0,0,0,0.8)) drop-shadow(-1px 0 0 rgba(0,0,0,0.8)) drop-shadow(0 1px 0 rgba(0,0,0,0.8)) drop-shadow(0 -1px 0 rgba(0,0,0,0.8))",
+              filter: "drop-shadow(1px 0 0 rgba(0,0,0,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 1px 0 rgba(0,0,0,0.3)) drop-shadow(0 -1px 0 rgba(0,0,0,0.3))",
             }}
             draggable={false}
           />
@@ -125,26 +125,8 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
         </div>
       </div>
 
-      {/* Contract address — always visible */}
-      <div
-        className="w-full max-w-xs rounded-lg px-3 py-2 mb-5 text-center cursor-pointer select-all"
-        style={{
-          backgroundColor: "rgba(139,115,85,0.08)",
-          border: "1px solid rgba(139,115,85,0.15)",
-        }}
-        onClick={copy}
-        title="Click to copy"
-      >
-        <p className="text-[10px] uppercase tracking-widest mb-1" style={{ color: "#8B7355", fontFamily: "'Baloo 2', sans-serif" }}>
-          Contract Address
-        </p>
-        <p className="text-[11px] sm:text-xs font-mono break-all leading-relaxed" style={{ color: "#5A3E2B" }}>
-          {config.contractAddress}
-        </p>
-      </div>
-
       {/* Social links — horizontal row */}
-      <div className="flex items-center gap-3 mb-5">
+      <div className="flex items-center gap-3 mt-3 mb-5">
         {links.map((l) => (
           <a
             key={l.key}

@@ -37,7 +37,7 @@ const config = {
 
   assets: {
     // Title logo
-    titleLogo: "/assets/Sluglord Assets – Refined Versions_Sluglord Text2.webp",
+    titleLogo: "/assets/sluglord-logo.png",
 
     // Scene layers — optimized WebP
     sky: "/assets/sky-clouds.webp",
