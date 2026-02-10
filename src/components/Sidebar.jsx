@@ -4,6 +4,38 @@ import useScreenSize from "../hooks/useScreenSize";
 import SignButton from "./SignButton";
 import TypewriterLore from "./TypewriterLore";
 
+function SocialIcon({ type }) {
+  const color = "#5A3E2B";
+  const size = "w-5 h-5 sm:w-6 sm:h-6";
+
+  if (type === "x") {
+    return (
+      <svg className={size} viewBox="0 0 24 24" fill={color}>
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    );
+  }
+
+  if (type === "telegram") {
+    return (
+      <svg className={size} viewBox="0 0 24 24" fill={color}>
+        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+      </svg>
+    );
+  }
+
+  if (type === "dex") {
+    return (
+      <svg className={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 3v18h18" />
+        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" />
+      </svg>
+    );
+  }
+
+  return null;
+}
+
 export default function Sidebar({ onOpenModal, copy, toast }) {
   const size = useScreenSize();
   const [loreActive, setLoreActive] = useState(false);
@@ -17,9 +49,9 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
   };
 
   const links = [
-    { key: "x",        url: config.socials.x,           icon: "\uD835\uDD4F", assetKey: "iconX",        label: "X" },
-    { key: "telegram", url: config.socials.telegram,     icon: "\u2708",        assetKey: "iconTelegram", label: "TG" },
-    { key: "dex",      url: config.socials.dexscreener,  icon: "\uD83D\uDCCA", assetKey: "iconDex",      label: "DEX" },
+    { key: "x",        url: config.socials.x,           label: "X" },
+    { key: "telegram", url: config.socials.telegram,     label: "Telegram" },
+    { key: "dex",      url: config.socials.dexscreener,  label: "DEX" },
   ];
 
   return (
@@ -236,8 +268,8 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
         </div>
       </div>
 
-      {/* Social links — horizontal row, pushed toward bottom */}
-      <div className="relative z-[1] flex items-center gap-5 sm:gap-5 mt-auto pt-4 sm:mt-0 sm:pt-0 mb-4 sm:mb-8">
+      {/* Social links — circled SVG icons */}
+      <div className="relative z-[1] flex items-center gap-5 sm:gap-6 mt-auto pt-4 sm:mt-0 sm:pt-0 mb-4 sm:mb-8">
         {links.map((l) => (
           <a
             key={l.key}
@@ -247,12 +279,15 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
             className="group"
             title={l.label}
           >
-            <div className="w-12 h-12 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform flex items-center justify-center">
-              {config.assets[l.assetKey] ? (
-                <img src={config.assets[l.assetKey]} alt={l.label} className="w-full h-full object-contain drop-shadow-md" draggable={false} />
-              ) : (
-                <span className="text-lg" style={{ color: "#5A3E2B" }}>{l.icon}</span>
-              )}
+            <div
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:shadow-lg"
+              style={{
+                background: "linear-gradient(175deg, #F5E6C8 0%, #EDD9B5 40%, #DFC494 100%)",
+                border: "2px solid #8B7355",
+                boxShadow: "0 2px 8px rgba(80,50,30,0.15), inset 0 1px 0 rgba(255,250,230,0.4)",
+              }}
+            >
+              <SocialIcon type={l.key} />
             </div>
           </a>
         ))}
