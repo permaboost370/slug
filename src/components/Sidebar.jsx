@@ -50,27 +50,6 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
         style={{ boxShadow: "inset 0 0 40px rgba(139,115,85,0.15), inset 0 0 80px rgba(139,115,85,0.08)" }}
       />
 
-      {/* Sluglord badge with warm glow halo */}
-      {config.assets.sluglordBadge && (
-        <div className="relative mb-4">
-          <div
-            className="absolute -inset-[30%] rounded-full pointer-events-none"
-            style={{
-              background: "radial-gradient(ellipse at center, rgba(255,210,80,0.25) 0%, rgba(255,180,60,0.1) 40%, transparent 70%)",
-              animation: "glow-breathe 8s ease-in-out infinite",
-              filter: "blur(10px)",
-            }}
-          />
-          <img
-            src={config.assets.sluglordBadge}
-            alt="Sluglord"
-            className="relative z-[1] h-28 sm:h-36 w-auto object-contain"
-            style={{ filter: "drop-shadow(0 4px 12px rgba(80,50,30,0.35))" }}
-            draggable={false}
-          />
-        </div>
-      )}
-
       {/* Token title */}
       <div className="relative mb-5">
         {config.assets.titleLogo ? (
