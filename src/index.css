@@ -209,6 +209,18 @@ body {
   }
 }
 
+/* ── Typewriter cursor blink ── */
+@keyframes typewriter-cursor {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ── Sidebar slide-in from right ── */
+@keyframes sidebar-enter {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
 /* ── Reduced motion: disable non-essential animations ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

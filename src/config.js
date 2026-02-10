@@ -16,6 +16,9 @@ const config = {
   },
 
   content: {
+    loreText:
+      "Sluglord is a mix of Pepe the Frog, Jabba the Hutt and an enlightened being. I was walking home up the hill I always walk some sunny morning after dropping my daughter off at school. I said goodbye to a friend, turned to walk away and saw a happy Buddha garden figurine with a happy smile, arms wide open to the sky, soaking up the sun. The moment influenced my idea. I like showing the 'good' side of 'bad' guys. The flower represents cosmic wonder and the beauty of life, the clouds, the rain, the soil, the interconnectedness of everything. There is a good reason flowers are popular in art. The flower compliments the smile of the sluglord and his outstretched arms bask in the sun like the pedals of a flower.",
+    loreAttribution: "-Your Truly 2024 this day of our Lord\nMatt Furie",
     memes: [],  // Future meme image URLs go here
     proof: [
       { url: "/assets/proof/photo_2026-02-05_21-13-58.jpg" },
@@ -71,6 +74,10 @@ const config = {
 
   audio: {
     ambient: null,                    // "/assets/ambient-morning.mp3"
+    sfx: {
+      signHover: "/assets/sfx/hover.mp3",
+      signClick: "/assets/sfx/click.mp3",
+    },
   },
 };
 
