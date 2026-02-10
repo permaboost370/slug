@@ -56,21 +56,30 @@ function Preloader({ onDone }) {
     <div
       className="fixed inset-0 z-[100] overflow-hidden cursor-pointer select-none"
       style={{
-        background: "radial-gradient(ellipse at 50% 35%, #2A1E10 0%, #140C04 70%, #0A0602 100%)",
+        background: "linear-gradient(175deg, #F5E6C8 0%, #EDD9B5 30%, #E8CFA5 60%, #DFC494 100%)",
         animation: exiting
           ? `preloader-exit ${FADE_OUT_MS}ms ease-in forwards`
           : undefined,
       }}
       onClick={dismiss}
     >
+      {/* Paper texture lines */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(139,115,85,0.04) 28px, rgba(139,115,85,0.04) 29px)",
+          mixBlendMode: "multiply",
+        }}
+      />
+
       {/* Subtle god rays from top */}
       <img
         src={GOD_RAYS_SRC}
         alt=""
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         style={{
-          mixBlendMode: "screen",
-          opacity: 0.12,
+          mixBlendMode: "soft-light",
+          opacity: 0.15,
           animation: "ray-drift 30s ease-in-out infinite, ray-pulse 12s ease-in-out infinite",
           transformOrigin: "50% 0%",
           maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 50%, transparent 75%)",
@@ -94,7 +103,7 @@ function Preloader({ onDone }) {
           alt=""
           className="w-full h-full object-contain"
           style={{
-            opacity: 0.15,
+            opacity: 0.12,
             animation: "sun-pulse 10s ease-in-out infinite",
             filter: "blur(8px)",
           }}
@@ -102,14 +111,14 @@ function Preloader({ onDone }) {
         />
       </div>
 
-      {/* Large warm ambient glow behind painting */}
+      {/* Warm ambient glow behind painting */}
       <div
-        className="absolute left-1/2 top-[40%] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        className="absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
         style={{
-          width: "90vmin",
-          height: "90vmin",
+          width: "80vmin",
+          height: "80vmin",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(212,160,23,0.18) 0%, rgba(232,184,74,0.06) 40%, transparent 65%)",
+          background: "radial-gradient(circle, rgba(212,160,23,0.12) 0%, rgba(232,184,74,0.04) 40%, transparent 65%)",
           animation: "preloader-glow 6s ease-in-out infinite",
         }}
       />
@@ -125,7 +134,7 @@ function Preloader({ onDone }) {
               bottom: p.bottom,
               width: p.size,
               height: p.size,
-              backgroundColor: "rgba(255,220,140,0.7)",
+              backgroundColor: "rgba(180,140,60,0.5)",
               "--dx": `${p.dx}px`,
               "--dy": `${p.dy}px`,
               animation: `preloader-particle ${p.duration}s ease-in-out infinite`,
@@ -150,15 +159,15 @@ function Preloader({ onDone }) {
               transformOrigin: "bottom center",
               animation: `grass-sway ${f.sway}s ease-in-out infinite, preloader-fade-in 1.4s ease-out both`,
               animationDelay: `${f.delay}s, ${f.delay}s`,
-              opacity: 0.45,
-              filter: "brightness(0.5) saturate(0.6)",
+              opacity: 0.35,
+              filter: "brightness(0.85) saturate(0.7)",
             }}
           >
             <img
               src={SUNFLOWER_SRC}
               alt=""
               className="w-full h-full object-contain"
-              style={{ filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.5))" }}
+              style={{ filter: "drop-shadow(0 4px 12px rgba(80,50,20,0.3))" }}
               draggable={false}
             />
           </div>
@@ -167,7 +176,7 @@ function Preloader({ onDone }) {
 
       {/* Center content */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative flex flex-col items-center gap-5 sm:gap-7 px-6 max-w-lg">
+        <div className="relative flex flex-col items-center gap-4 sm:gap-6 px-6 max-w-lg">
           {/* Painting with ornate golden frame */}
           <div
             className="relative"
@@ -180,7 +189,7 @@ function Preloader({ onDone }) {
             <div
               className="absolute -inset-[30%] rounded-full pointer-events-none"
               style={{
-                background: "radial-gradient(ellipse at center, rgba(212,160,23,0.2) 0%, transparent 60%)",
+                background: "radial-gradient(ellipse at center, rgba(212,160,23,0.12) 0%, transparent 60%)",
                 animation: "preloader-glow 5s ease-in-out infinite",
               }}
             />
@@ -192,7 +201,7 @@ function Preloader({ onDone }) {
                 background: "linear-gradient(145deg, #D4A017 0%, #8B6914 15%, #F5DEB3 30%, #D4A017 50%, #8B6914 70%, #F5DEB3 85%, #D4A017 100%)",
                 backgroundSize: "200% 200%",
                 animation: "preloader-shimmer 4s linear infinite",
-                boxShadow: "0 12px 50px rgba(0,0,0,0.7), 0 0 100px rgba(212,160,23,0.12), inset 0 1px 0 rgba(255,255,255,0.2)",
+                boxShadow: "0 12px 50px rgba(80,50,20,0.4), 0 0 80px rgba(212,160,23,0.08), inset 0 1px 0 rgba(255,255,255,0.3)",
               }}
             >
               {/* Inner frame bevel */}
@@ -200,31 +209,18 @@ function Preloader({ onDone }) {
                 className="rounded-[4px] overflow-hidden"
                 style={{
                   padding: "3px",
-                  background: "linear-gradient(to bottom, rgba(90,60,20,0.9), rgba(60,40,15,0.9))",
-                  boxShadow: "inset 0 1px 3px rgba(0,0,0,0.5), inset 0 -1px 2px rgba(212,160,23,0.2)",
+                  background: "linear-gradient(to bottom, rgba(90,60,20,0.85), rgba(60,40,15,0.85))",
+                  boxShadow: "inset 0 1px 3px rgba(0,0,0,0.4), inset 0 -1px 2px rgba(212,160,23,0.15)",
                 }}
               >
                 <img
                   src={PAINTING_SRC}
                   alt="The original Sluglord painting by Matt Furie"
-                  className="w-[52vmin] sm:w-[40vmin] max-w-sm aspect-square object-cover rounded-[2px]"
+                  className="w-[50vmin] sm:w-[38vmin] max-w-sm aspect-square object-cover rounded-[2px]"
                   draggable={false}
                 />
               </div>
             </div>
-          </div>
-
-          {/* Decorative divider */}
-          <div
-            className="flex items-center gap-3 w-full max-w-[280px]"
-            style={{
-              animation: "preloader-fade-in 1s ease-out both",
-              animationDelay: "1.2s",
-            }}
-          >
-            <div className="h-px flex-1" style={{ background: "linear-gradient(to right, transparent, rgba(212,160,23,0.4))" }} />
-            <img src={SUNFLOWER_SRC} alt="" className="w-5 h-5 object-contain" style={{ opacity: 0.5, filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.5))" }} draggable={false} />
-            <div className="h-px flex-1" style={{ background: "linear-gradient(to left, transparent, rgba(212,160,23,0.4))" }} />
           </div>
 
           {/* Title */}
@@ -232,56 +228,105 @@ function Preloader({ onDone }) {
             className="text-center"
             style={{
               animation: "preloader-fade-in 1.2s ease-out both",
-              animationDelay: "1.5s",
+              animationDelay: "1.2s",
             }}
           >
             <h2
               className="text-2xl sm:text-3xl font-bold tracking-wide"
               style={{
                 fontFamily: "'Baloo 2', sans-serif",
-                color: "#F5DEB3",
-                textShadow: "0 2px 16px rgba(212,160,23,0.35), 0 0 40px rgba(212,160,23,0.1)",
+                color: "#5A3E2B",
+                textShadow: "0 1px 0 rgba(255,250,230,0.4)",
               }}
             >
               The Original Sluglord
             </h2>
           </div>
 
-          {/* Subtitle */}
+          {/* Decorative divider */}
           <div
-            className="text-center -mt-2"
+            className="flex items-center gap-3 w-full max-w-[280px] -mt-1"
             style={{
               animation: "preloader-fade-in 1s ease-out both",
-              animationDelay: "2.2s",
+              animationDelay: "1.6s",
+            }}
+          >
+            <div className="h-px flex-1" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
+            <img src={SUNFLOWER_SRC} alt="" className="w-6 h-6 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
+            <div className="h-px flex-1" style={{ background: "linear-gradient(to left, transparent, #8B7355)" }} />
+          </div>
+
+          {/* Artist credit */}
+          <div
+            className="text-center -mt-1"
+            style={{
+              animation: "preloader-fade-in 1s ease-out both",
+              animationDelay: "2s",
             }}
           >
             <p
-              className="text-sm sm:text-base tracking-[0.2em] uppercase"
+              className="text-sm sm:text-base tracking-[0.15em] uppercase"
               style={{
                 fontFamily: "'Baloo 2', sans-serif",
-                color: "rgba(245,222,179,0.45)",
+                color: "#8B7355",
               }}
             >
               Painting by Matt Furie
             </p>
-            <p
-              className="text-xs sm:text-sm mt-1.5 italic"
+          </div>
+
+          {/* DEV OWNED — prominent badge */}
+          <div
+            className="text-center"
+            style={{
+              animation: "preloader-fade-in 1.2s ease-out both",
+              animationDelay: "2.6s",
+            }}
+          >
+            <div
+              className="inline-block rounded-xl px-6 sm:px-8 py-3 sm:py-4"
               style={{
-                fontFamily: "'Baloo 2', sans-serif",
-                color: "rgba(245,222,179,0.3)",
+                backgroundColor: "rgba(139,115,85,0.12)",
+                border: "2px solid rgba(139,115,85,0.25)",
+                boxShadow: "0 2px 12px rgba(80,50,20,0.08)",
               }}
             >
-              Owned by the dev
-            </p>
+              <p
+                className="text-lg sm:text-xl font-bold tracking-[0.12em] uppercase"
+                style={{
+                  fontFamily: "'Baloo 2', sans-serif",
+                  color: "#5A3E2B",
+                }}
+              >
+                Owned by the Dev
+              </p>
+              <p
+                className="text-xs sm:text-sm mt-1 tracking-wide"
+                style={{
+                  fontFamily: "'Baloo 2', sans-serif",
+                  color: "#8B7355",
+                }}
+              >
+                Original 1/1 Painting
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Cinematic vignette overlay */}
+      {/* Soft warm inner shadow edges */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(0,0,0,0.6) 100%)",
+          boxShadow: "inset 0 0 100px rgba(139,115,85,0.15), inset 0 0 200px rgba(139,115,85,0.06)",
+        }}
+      />
+
+      {/* Subtle vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(139,115,85,0.2) 100%)",
         }}
       />
     </div>
