@@ -153,6 +153,22 @@ body {
   100% { opacity: 1; transform: scale(1); }
 }
 
+/* ── Preloader: staggered fade-in for elements ── */
+@keyframes preloader-fade-in {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes preloader-glow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(1.06); }
+}
+
+@keyframes preloader-exit {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 /* ── Atmospheric haze: slow vertical drift ── */
 @keyframes haze-drift {
   0%, 100% { transform: translateY(0); }
