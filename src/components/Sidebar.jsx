@@ -26,7 +26,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
     <div
       className="w-full h-full overflow-y-auto flex flex-col items-center justify-center px-5 py-8 sm:px-8 sm:py-10 sm:border-l-[3px]"
       style={{
-        background: "linear-gradient(175deg, #F5E6C8 0%, #EDD9B5 30%, #E8CFA5 60%, #DFC494 100%)",
+        background: "linear-gradient(175deg, #F5E6C8 0%, #EDD9B5 25%, #E8CFA5 50%, #DFC494 75%, #D4B882 100%)",
         borderColor: "#8B7355",
         animation: "sidebar-enter 0.5s ease-out",
       }}
@@ -39,24 +39,147 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
           mixBlendMode: "multiply",
         }}
       />
-      {/* Warm inner shadow */}
+
+      {/* Warm inner shadow — deeper edges */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ boxShadow: "inset 0 0 40px rgba(139,115,85,0.15), inset 0 0 80px rgba(139,115,85,0.08)" }}
+        style={{ boxShadow: "inset 0 0 60px rgba(139,115,85,0.2), inset 0 0 120px rgba(139,115,85,0.1)" }}
       />
 
-      {/* Token title / logo */}
-      <div className="relative mb-8 sm:mb-10">
-        {config.assets.titleLogo ? (
+      {/* Ambient warm glow — drifting light spot */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "35%",
+          left: "50%",
+          width: "120%",
+          height: "80%",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(255,210,80,0.12) 0%, rgba(232,184,74,0.05) 40%, transparent 65%)",
+          animation: "sidebar-glow 12s ease-in-out infinite",
+        }}
+      />
+
+      {/* God rays bleeding from scene side */}
+      {config.assets.godRays && (
+        <div
+          className="absolute inset-0 pointer-events-none overflow-hidden hidden sm:block"
+          style={{
+            maskImage: "linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 40%, transparent 70%)",
+            WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 40%, transparent 70%)",
+          }}
+        >
           <img
-            src={config.assets.titleLogo}
-            alt={config.tokenName}
-            className="w-[55vw] sm:w-[16vw] max-w-[240px]"
+            src={config.assets.godRays}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
             style={{
-              filter: "drop-shadow(1px 0 0 rgba(0,0,0,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 1px 0 rgba(0,0,0,0.3)) drop-shadow(0 -1px 0 rgba(0,0,0,0.3))",
+              animation: "ray-drift 30s ease-in-out infinite, ray-pulse 14s ease-in-out infinite",
+              mixBlendMode: "soft-light",
+              opacity: 0.15,
+              transformOrigin: "0% 0%",
             }}
             draggable={false}
           />
+        </div>
+      )}
+
+      {/* Soft vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(139,115,85,0.18) 100%)",
+        }}
+      />
+
+      {/* Decorative sunflowers along bottom edges */}
+      {config.assets.sunflower && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <img
+            src={config.assets.sunflower}
+            alt=""
+            className="absolute"
+            style={{
+              bottom: "-6%", left: "-4%", height: "22vh",
+              transform: "rotate(10deg)",
+              opacity: 0.12, filter: "blur(1px) saturate(0.6)",
+            }}
+            draggable={false}
+          />
+          <img
+            src={config.assets.sunflower}
+            alt=""
+            className="absolute"
+            style={{
+              bottom: "-8%", right: "-3%", height: "18vh",
+              transform: "rotate(-8deg) scaleX(-1)",
+              opacity: 0.1, filter: "blur(1px) saturate(0.6)",
+            }}
+            draggable={false}
+          />
+          <img
+            src={config.assets.sunflower}
+            alt=""
+            className="absolute hidden sm:block"
+            style={{
+              bottom: "-4%", left: "20%", height: "14vh",
+              transform: "rotate(6deg)",
+              opacity: 0.08, filter: "blur(1.5px) saturate(0.5)",
+            }}
+            draggable={false}
+          />
+        </div>
+      )}
+
+      {/* ── Logo with glow halo + float + shimmer ── */}
+      <div
+        className="relative mb-8 sm:mb-10"
+        style={{ animation: "logo-float 6s ease-in-out infinite" }}
+      >
+        {config.assets.titleLogo ? (
+          <>
+            {/* Outer warm glow halo */}
+            <div
+              className="absolute -inset-[45%] rounded-full pointer-events-none"
+              style={{
+                background: "radial-gradient(ellipse at center, rgba(255,210,80,0.3) 0%, rgba(255,180,60,0.12) 40%, transparent 70%)",
+                animation: "logo-glow 8s ease-in-out infinite",
+                filter: "blur(16px)",
+              }}
+            />
+            {/* Inner tighter glow */}
+            <div
+              className="absolute -inset-[20%] rounded-full pointer-events-none"
+              style={{
+                background: "radial-gradient(ellipse at center, rgba(255,240,180,0.2) 0%, rgba(255,210,80,0.08) 50%, transparent 70%)",
+                animation: "logo-glow 6s ease-in-out infinite",
+                animationDelay: "-3s",
+                filter: "blur(8px)",
+              }}
+            />
+            {/* Logo image */}
+            <div className="relative overflow-hidden">
+              <img
+                src={config.assets.titleLogo}
+                alt={config.tokenName}
+                className="relative z-[1] w-[55vw] sm:w-[16vw] max-w-[240px]"
+                style={{
+                  filter: "drop-shadow(1px 0 0 rgba(0,0,0,0.25)) drop-shadow(-1px 0 0 rgba(0,0,0,0.25)) drop-shadow(0 1px 0 rgba(0,0,0,0.25)) drop-shadow(0 -1px 0 rgba(0,0,0,0.25)) drop-shadow(0 0 12px rgba(255,210,80,0.2))",
+                }}
+                draggable={false}
+              />
+              {/* Shimmer sweep */}
+              <div
+                className="absolute top-0 z-[2] h-full pointer-events-none"
+                style={{
+                  width: "40%",
+                  background: "linear-gradient(105deg, transparent 0%, rgba(255,250,220,0.35) 45%, rgba(255,240,180,0.15) 55%, transparent 100%)",
+                  animation: "logo-shimmer 4s ease-in-out infinite",
+                  animationDelay: "2s",
+                }}
+              />
+            </div>
+          </>
         ) : (
           <h1
             className="text-3xl sm:text-4xl font-extrabold leading-none tracking-wide"
@@ -72,7 +195,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
       </div>
 
       {/* Divider */}
-      <div className="w-full flex items-center justify-center gap-3 mb-8 sm:mb-10">
+      <div className="relative z-[1] w-full flex items-center justify-center gap-3 mb-8 sm:mb-10">
         <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
         {config.assets.sunflower ? (
           <img src={config.assets.sunflower} alt="" className="w-6 h-6 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
@@ -83,7 +206,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
       </div>
 
       {/* Sign menu — vertical stack */}
-      <div className="flex flex-col items-center gap-2 sm:gap-3 mb-8 sm:mb-10">
+      <div className="relative z-[1] flex flex-col items-center gap-2 sm:gap-3 mb-8 sm:mb-10">
         <SignButton label={"\uD835\uDCDB\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE"} onClick={handleLore} />
         <SignButton label={"\uD835\uDCD5\uD835\uDCFB\uD835\uDCF8\uD835\uDCF8\uD835\uDCEF"} onClick={() => onOpenModal("proof")} />
         <div className="relative">
@@ -100,7 +223,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
       </div>
 
       {/* Social links — horizontal row */}
-      <div className="flex items-center gap-4 sm:gap-5 mb-6 sm:mb-8">
+      <div className="relative z-[1] flex items-center gap-4 sm:gap-5 mb-6 sm:mb-8">
         {links.map((l) => (
           <a
             key={l.key}
@@ -123,7 +246,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
 
       {/* TypewriterLore slot — desktop only, conditionally rendered */}
       {loreActive && size !== "mobile" && (
-        <div className="w-full max-w-xs mt-2">
+        <div className="relative z-[1] w-full max-w-xs mt-2">
           <TypewriterLore
             text={config.content.loreText}
             attribution={config.content.loreAttribution}

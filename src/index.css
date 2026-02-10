@@ -209,6 +209,31 @@ body {
   }
 }
 
+/* ── Logo float — gentle hovering drift ── */
+@keyframes logo-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* ── Logo glow — warm halo breathing behind logo ── */
+@keyframes logo-glow {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50%      { transform: scale(1.15); opacity: 0.8; }
+}
+
+/* ── Logo shimmer — shine sweep across ── */
+@keyframes logo-shimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ── Sidebar ambient glow — warm light drift ── */
+@keyframes sidebar-glow {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  33%      { transform: translate(-48%, -52%) scale(1.08); opacity: 0.7; }
+  66%      { transform: translate(-52%, -48%) scale(1.04); opacity: 0.6; }
+}
+
 /* ── Typewriter cursor blink ── */
 @keyframes typewriter-cursor {
   0%, 100% { opacity: 1; }
