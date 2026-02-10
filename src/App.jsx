@@ -180,19 +180,18 @@ function Preloader({ onDone }) {
             <div
               className="absolute -inset-[30%] rounded-full pointer-events-none"
               style={{
-                background: "radial-gradient(ellipse at center, rgba(212,160,23,0.12) 0%, transparent 60%)",
+                background: "radial-gradient(ellipse at center, rgba(212,160,23,0.15) 0%, transparent 60%)",
                 animation: "preloader-glow 5s ease-in-out infinite",
               }}
             />
-            {/* Multi-layer golden frame */}
+            {/* Animated golden frame */}
             <div
-              className="relative rounded-lg overflow-hidden"
+              className="relative rounded-lg overflow-hidden p-2 sm:p-2.5"
               style={{
-                padding: "6px sm:8px",
                 background: "linear-gradient(145deg, #D4A017 0%, #8B6914 15%, #F5DEB3 30%, #D4A017 50%, #8B6914 70%, #F5DEB3 85%, #D4A017 100%)",
                 backgroundSize: "200% 200%",
                 animation: "preloader-shimmer 4s linear infinite",
-                boxShadow: "0 12px 50px rgba(80,50,20,0.4), 0 0 80px rgba(212,160,23,0.08), inset 0 1px 0 rgba(255,255,255,0.3)",
+                boxShadow: "0 12px 50px rgba(80,50,20,0.4), 0 0 80px rgba(212,160,23,0.12), inset 0 1px 0 rgba(255,255,255,0.3)",
               }}
             >
               {/* Inner frame bevel */}
@@ -207,7 +206,7 @@ function Preloader({ onDone }) {
                 <img
                   src={PAINTING_SRC}
                   alt="The original Sluglord painting by Matt Furie"
-                  className="w-[38vmin] sm:w-[35vmin] md:w-[32vmin] max-w-xs aspect-square object-cover rounded-[2px]"
+                  className="w-[52vmin] sm:w-[42vmin] md:w-[36vmin] max-w-md aspect-square object-cover rounded-[2px]"
                   draggable={false}
                 />
               </div>
@@ -302,6 +301,19 @@ function Preloader({ onDone }) {
               </p>
             </div>
           </div>
+
+          {/* Click to continue */}
+          <p
+            className="text-[10px] sm:text-xs tracking-[0.15em] uppercase"
+            style={{
+              animation: "preloader-fade-in 0.8s ease-out both",
+              animationDelay: "3.2s",
+              fontFamily: "'Baloo 2', sans-serif",
+              color: "rgba(139,115,85,0.4)",
+            }}
+          >
+            Click to continue
+          </p>
         </div>
       </div>
 
