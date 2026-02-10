@@ -236,8 +236,8 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
         </div>
       </div>
 
-      {/* Social links — horizontal row */}
-      <div className="relative z-[1] flex items-center gap-4 sm:gap-5 mb-6 sm:mb-8">
+      {/* Social links — horizontal row, pushed toward bottom */}
+      <div className="relative z-[1] flex items-center gap-5 sm:gap-5 mt-auto pt-4 sm:mt-0 sm:pt-0 mb-4 sm:mb-8">
         {links.map((l) => (
           <a
             key={l.key}

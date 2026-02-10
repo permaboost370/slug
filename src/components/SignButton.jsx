@@ -15,9 +15,9 @@ export default function SignButton({ label, onClick, className = "" }) {
         className={`relative cursor-pointer sign-hover ${className}`}
         onClick={handleClick}
       >
-        <img src={config.assets.woodenSign} alt="" className="w-32 sm:w-36 md:w-44" draggable={false} />
+        <img src={config.assets.woodenSign} alt="" className="w-40 sm:w-40 md:w-48" draggable={false} />
         <span
-          className="absolute inset-0 flex items-center justify-center text-base sm:text-base md:text-lg font-bold"
+          className="absolute inset-0 flex items-center justify-center text-lg sm:text-lg md:text-xl font-bold"
           style={{ fontFamily: "'Baloo 2', sans-serif", color: "#FFFEF5", textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000" }}
         >
           {label}

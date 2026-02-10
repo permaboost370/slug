@@ -324,6 +324,25 @@ export default function Scene() {
           <ScenePanel />
         </div>
 
+        {/* Mobile divider between scene and sidebar */}
+        <div className="sm:hidden relative z-[2] h-3 -mt-1.5 flex items-center justify-center"
+          style={{
+            background: "linear-gradient(to bottom, rgba(40,25,10,0.6), rgba(139,115,85,0.3) 40%, rgba(223,196,148,0.8))",
+          }}
+        >
+          <div className="absolute inset-x-0 top-0 h-px" style={{ background: "linear-gradient(to right, transparent 10%, #6B5340 50%, transparent 90%)" }} />
+          <div className="absolute inset-x-0 bottom-0 h-px" style={{ background: "linear-gradient(to right, transparent 10%, #8B7355 50%, transparent 90%)" }} />
+          {config.assets.sunflower && (
+            <img
+              src={config.assets.sunflower}
+              alt=""
+              className="w-5 h-5 object-contain relative z-[1]"
+              style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }}
+              draggable={false}
+            />
+          )}
+        </div>
+
         {/* Right panel — parchment sidebar */}
         <div className="w-full flex-1 sm:h-full sm:w-1/3 overflow-y-auto relative">
           <Sidebar
