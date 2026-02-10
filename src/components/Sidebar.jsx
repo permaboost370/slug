@@ -8,11 +8,6 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
   const size = useScreenSize();
   const [loreActive, setLoreActive] = useState(false);
 
-  const shortAddr =
-    config.contractAddress.length > 16
-      ? config.contractAddress.slice(0, 6) + "..." + config.contractAddress.slice(-4)
-      : config.contractAddress;
-
   const handleLore = () => {
     if (size === "mobile") {
       onOpenModal("lore");
@@ -29,7 +24,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
 
   return (
     <div
-      className="w-full h-full overflow-y-auto flex flex-col items-center px-4 py-6 sm:px-6 sm:py-8 sm:border-l-[3px]"
+      className="w-full h-full overflow-y-auto flex flex-col items-center justify-center px-5 py-8 sm:px-8 sm:py-10 sm:border-l-[3px]"
       style={{
         background: "linear-gradient(175deg, #F5E6C8 0%, #EDD9B5 30%, #E8CFA5 60%, #DFC494 100%)",
         borderColor: "#8B7355",
@@ -50,13 +45,13 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
         style={{ boxShadow: "inset 0 0 40px rgba(139,115,85,0.15), inset 0 0 80px rgba(139,115,85,0.08)" }}
       />
 
-      {/* Token title */}
-      <div className="relative mb-5">
+      {/* Token title / logo */}
+      <div className="relative mb-8 sm:mb-10">
         {config.assets.titleLogo ? (
           <img
             src={config.assets.titleLogo}
             alt={config.tokenName}
-            className="w-[50vw] sm:w-[14vw] max-w-[220px]"
+            className="w-[55vw] sm:w-[16vw] max-w-[240px]"
             style={{
               filter: "drop-shadow(1px 0 0 rgba(0,0,0,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 1px 0 rgba(0,0,0,0.3)) drop-shadow(0 -1px 0 rgba(0,0,0,0.3))",
             }}
@@ -77,18 +72,18 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
       </div>
 
       {/* Divider */}
-      <div className="w-full flex items-center justify-center gap-3 mb-5">
-        <div className="h-px flex-1 max-w-16" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
+      <div className="w-full flex items-center justify-center gap-3 mb-8 sm:mb-10">
+        <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to right, transparent, #8B7355)" }} />
         {config.assets.sunflower ? (
           <img src={config.assets.sunflower} alt="" className="w-6 h-6 object-contain" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }} draggable={false} />
         ) : (
           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "#8B7355" }} />
         )}
-        <div className="h-px flex-1 max-w-16" style={{ background: "linear-gradient(to left, transparent, #8B7355)" }} />
+        <div className="h-px flex-1 max-w-20" style={{ background: "linear-gradient(to left, transparent, #8B7355)" }} />
       </div>
 
       {/* Sign menu — vertical stack */}
-      <div className="flex flex-col items-center gap-1 mb-5">
+      <div className="flex flex-col items-center gap-2 sm:gap-3 mb-8 sm:mb-10">
         <SignButton label={"\uD835\uDCDB\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE"} onClick={handleLore} />
         <SignButton label={"\uD835\uDCD5\uD835\uDCFB\uD835\uDCF8\uD835\uDCF8\uD835\uDCEF"} onClick={() => onOpenModal("proof")} />
         <div className="relative">
@@ -105,7 +100,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
       </div>
 
       {/* Social links — horizontal row */}
-      <div className="flex items-center gap-3 mt-3 mb-5">
+      <div className="flex items-center gap-4 sm:gap-5 mb-6 sm:mb-8">
         {links.map((l) => (
           <a
             key={l.key}
@@ -115,7 +110,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
             className="group"
             title={l.label}
           >
-            <div className="w-10 h-10 sm:w-12 sm:h-12 group-hover:scale-110 transition-transform flex items-center justify-center">
+            <div className="w-11 h-11 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform flex items-center justify-center">
               {config.assets[l.assetKey] ? (
                 <img src={config.assets[l.assetKey]} alt={l.label} className="w-full h-full object-contain drop-shadow-md" draggable={false} />
               ) : (
@@ -128,7 +123,7 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
 
       {/* TypewriterLore slot — desktop only, conditionally rendered */}
       {loreActive && size !== "mobile" && (
-        <div className="w-full max-w-xs">
+        <div className="w-full max-w-xs mt-2">
           <TypewriterLore
             text={config.content.loreText}
             attribution={config.content.loreAttribution}
