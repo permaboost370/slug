@@ -168,16 +168,30 @@ export default function Sidebar({ onOpenModal, copy, toast }) {
                 }}
                 draggable={false}
               />
-              {/* Shimmer sweep */}
+              {/* Shimmer sweep — masked to logo shape */}
               <div
-                className="absolute top-0 z-[2] h-full pointer-events-none"
+                className="absolute inset-0 z-[2] pointer-events-none overflow-hidden"
                 style={{
-                  width: "40%",
-                  background: "linear-gradient(105deg, transparent 0%, rgba(255,250,220,0.35) 45%, rgba(255,240,180,0.15) 55%, transparent 100%)",
-                  animation: "logo-shimmer 4s ease-in-out infinite",
-                  animationDelay: "2s",
+                  maskImage: `url(${config.assets.titleLogo})`,
+                  WebkitMaskImage: `url(${config.assets.titleLogo})`,
+                  maskSize: "contain",
+                  WebkitMaskSize: "contain",
+                  maskPosition: "center",
+                  WebkitMaskPosition: "center",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskRepeat: "no-repeat",
                 }}
-              />
+              >
+                <div
+                  className="absolute top-0 h-full"
+                  style={{
+                    width: "40%",
+                    background: "linear-gradient(105deg, transparent 0%, rgba(255,250,220,0.5) 45%, rgba(255,240,180,0.2) 55%, transparent 100%)",
+                    animation: "logo-shimmer 4s ease-in-out infinite",
+                    animationDelay: "2s",
+                  }}
+                />
+              </div>
             </div>
           </>
         ) : (
