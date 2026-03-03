@@ -11,8 +11,6 @@ const config = {
   socials: {
     x: "https://x.com/sluglord_owner",
     telegram: "https://t.me/SluglordOwner",
-    dexscreener:
-      "https://dexscreener.com/ethereum/0x5791254f5d7a4d7ce4dda0391ce15812b65ac2a2",
     dextools: "https://www.dextools.io/app/token/sluglord",
   },
 
@@ -61,7 +59,6 @@ const config = {
     iconX: "/assets/icon-x.webp",
     iconTelegram: "/assets/icon-telegram.webp",
     iconDex: "/assets/icon-dex.webp",
-    iconDextools: null,
 
     // Lore modal badge
     sluglordBadge: "/assets/sluglord-badge.webp",
