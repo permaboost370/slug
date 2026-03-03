@@ -5,14 +5,13 @@
 
 const config = {
   tokenName: "SLUGLORD",
-  contractAddress: "0x5791254f5d7a4d7ce4dda0391ce15812b65ac2a2",
+  contractAddress: "Dor8frTyjvgrok3zg95PzVHxnJTKyUP7tmL2Pvo8pump",
   ticker: "$SLUG",
 
   socials: {
     x: "https://x.com/sluglord_owner",
     telegram: "https://t.me/SluglordOwner",
-    dexscreener:
-      "https://dexscreener.com/ethereum/0x5791254f5d7a4d7ce4dda0391ce15812b65ac2a2",
+    dextools: "https://www.dextools.io/app/token/sluglord",
   },
 
   content: {

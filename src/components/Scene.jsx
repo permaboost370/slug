@@ -915,7 +915,7 @@ function SocialLinks() {
   const links = [
     { key: "x",         url: config.socials.x,            icon: "\uD835\uDD4F", assetKey: "iconX",        label: "X" },
     { key: "telegram",  url: config.socials.telegram,     icon: "\u2708",        assetKey: "iconTelegram", label: "TG" },
-    { key: "dex",       url: config.socials.dexscreener,  icon: "\uD83D\uDCCA", assetKey: "iconDex",      label: "DEX" },
+    { key: "dextools", url: config.socials.dextools,     icon: "\uD83D\uDCCA", assetKey: "iconDex",      label: "DexTools" },
   ];
 
   return (
